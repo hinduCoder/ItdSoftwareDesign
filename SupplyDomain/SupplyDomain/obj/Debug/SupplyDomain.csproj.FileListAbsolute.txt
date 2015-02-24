@@ -1,5 +1,0 @@
-D:\GitHub Projects\ItdSoftwareDesign\SupplyDomain\SupplyDomain\bin\Debug\SupplyDomain.dll
-D:\GitHub Projects\ItdSoftwareDesign\SupplyDomain\SupplyDomain\bin\Debug\SupplyDomain.pdb
-D:\GitHub Projects\ItdSoftwareDesign\SupplyDomain\SupplyDomain\obj\Debug\SupplyDomain.csprojResolveAssemblyReference.cache
-D:\GitHub Projects\ItdSoftwareDesign\SupplyDomain\SupplyDomain\obj\Debug\SupplyDomain.dll
-D:\GitHub Projects\ItdSoftwareDesign\SupplyDomain\SupplyDomain\obj\Debug\SupplyDomain.pdb
