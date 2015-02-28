@@ -12,10 +12,7 @@ namespace SupplyDomain
 
         public int Quantity
         {
-            get
-            {
-                return quantity;
-            }
+            get { return quantity; }
         }
 
         public OrderedItem(int _quantity)

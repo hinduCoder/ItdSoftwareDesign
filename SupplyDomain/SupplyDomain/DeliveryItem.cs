@@ -1,16 +1,20 @@
 ﻿using System;
 
-public enum DeliveryStatus {
-    //TODO contants
+public enum DeliveryStatus 
+{
+    Expected,   //Ожидается
+    Performed,  //Выполняется
+    Completed   //Завершено
 }
 
 public class DeliveryItem
 {
     private DeliveryStatus status;
+    private DateTime date;
 
-    public DeliveryItem()
+    public DeliveryItem(DateTime data)
     {
-        
+        this.date = data;
+        this.status = DeliveryStatus.Expected;
     }
-
 }

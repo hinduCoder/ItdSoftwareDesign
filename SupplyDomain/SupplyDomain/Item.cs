@@ -14,26 +14,17 @@ namespace SupplyDomain
 
         public string Name
         {
-            get 
-            {
-                return name;
-            }
+            get { return name; }
         }
 
         public string Descripton
         {
-            get
-            {
-                return description;
-            }
+            get { return description; }
         }
 
         public string Article
         {
-            get
-            {
-                return article;
-            }
+            get { return article; }
         }
 
         public Item(string _name, string _description, string _article)
