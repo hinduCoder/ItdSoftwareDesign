@@ -8,30 +8,30 @@ namespace SupplyDomain
 {
     class Item
     {
-        private string name;
-        private string description;
-        private string article;
+        private string _name;
+        private string _description;
+        private string _article;
 
         public string Name
         {
-            get { return name; }
+            get { return _name; }
         }
 
         public string Descripton
         {
-            get { return description; }
+            get { return _description; }
         }
 
         public string Article
         {
-            get { return article; }
+            get { return _article; }
         }
 
-        public Item(string _name, string _description, string _article)
+        public Item(string name, string description, string article)
         {
-            name = _name;
-            description = _description;
-            article = _article;
+            _name = name;
+            _description = description;
+            _article = article;
         }
     }
 }

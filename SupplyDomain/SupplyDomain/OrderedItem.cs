@@ -8,16 +8,16 @@ namespace SupplyDomain
 {
     class OrderedItem
     {
-        private int quantity;
+        private int _quantity;
 
         public int Quantity
         {
-            get { return quantity; }
+            get { return _quantity; }
         }
 
-        public OrderedItem(int _quantity)
+        public OrderedItem(int quantity)
         {
-            quantity = _quantity;
+            _quantity = quantity;
         }
     }
 }

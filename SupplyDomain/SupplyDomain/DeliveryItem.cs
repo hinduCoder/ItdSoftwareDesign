@@ -1,20 +1,47 @@
 ﻿using System;
 
-public enum DeliveryStatus 
+namespace SupplyDomain
 {
-    Expected,   //Ожидается
-    Performed,  //Выполняется
-    Completed   //Завершено
-}
-
-public class DeliveryItem
-{
-    private DeliveryStatus status;
-    private DateTime date;
-
-    public DeliveryItem(DateTime data)
+    public enum DeliveryStatus
     {
-        this.date = data;
-        this.status = DeliveryStatus.Expected;
+        Expected, //Ожидается
+        Performed, //Выполняется
+        Completed //Завершено
+    }
+
+    public class DeliveryItem
+    {
+        private DeliveryStatus _status;
+        private DateTime _date;
+
+        public DeliveryItem(DateTime data)
+        {
+            _date = data;
+            _status = DeliveryStatus.Expected;
+        }
+
+        public DateTime Date
+        {
+            get { return _date; }
+            set { _date = value; }
+        }
+
+        public DeliveryStatus Status
+        {
+            get { return _status; }
+            set { _status = value; }
+        }
+
+        public void SetPerformed(DateTime performedDate)
+        {
+            _date = performedDate;
+            _status = DeliveryStatus.Performed;
+        }
+
+        public void SetCompleted(DateTime completedDate)
+        {
+            _date = completedDate;
+            _status = DeliveryStatus.Completed;
+        }
     }
 }
