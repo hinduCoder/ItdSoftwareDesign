@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Feonufry.CUI.Menu.Builders;
 
 namespace SupplyClient {
     class Program {
         static void Main(string[] args) {
+            new MenuBuilder()
+                .Title("Снабжение")
+                .Repeatable()
+                .Submenu("Добавление контракта")
+                    .Exit("Назад")
+                    .End()
+                .Submenu("Изменение состояний")
+                    .Exit("Назад")
+                    .End()
+                .Exit("Закрыть").GetMenu().Run();
         }
     }
 }

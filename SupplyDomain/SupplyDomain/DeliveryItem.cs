@@ -32,15 +32,15 @@ namespace SupplyDomain
             set { _status = value; }
         }
 
-        public void SetPerformed(DateTime performedDate)
+        public void SetPerformed()
         {
-            _date = performedDate;
+            _date = DateTime.Now;
             _status = DeliveryStatus.Performed;
         }
 
-        public void SetCompleted(DateTime completedDate)
+        public void SetCompleted()
         {
-            _date = completedDate;
+            _date = DateTime.Now;
             _status = DeliveryStatus.Completed;
         }
     }
