@@ -1,100 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SupplyDomain.Misc;
 
-<<<<<<< Updated upstream
-namespace SupplyDomain
-{
-    public class Period
-    {
-        protected int? _days;
-        protected int? _weeks;
-        protected int? _months;
-        protected int? _years;
+namespace SupplyDomain {
+    public class Period {
+        private int? _days;
+        private int? _weeks;
+        private int? _months;
+        private int? _years;
         private DateTime _startDate;
+        private readonly HashSet<DayOfWeek> _daysOfWeek = new HashSet<DayOfWeek>();
 
-        public Period(DateTime startDate)
+        public Period(DateTime startDate) 
         {
             _startDate = startDate;
         }
-        public int? Days
+        public int? Days 
         {
             get { return _days; }
             set { _days = value; }
         }
-        public int? Weeks
+        public int? Weeks 
         {
             get { return _weeks; }
             set { _weeks = value; }
         }
-        public int? Months
+        public int? Months 
         {
             get { return _months; }
             set { _months = value; }
         }
-        public int? Years
+        public int? Years 
         {
             get { return _years; }
             set { _years = value; }
-        }
-        public bool IsToday
-        {
-            get { return CheckWhetherDateIsToday(); }
-        }
-        private bool CheckWhetherDateIsToday()
-        {
-            var result = true;
-            var now = DateTime.Now;
-            if(_years != null)
-                result &=  (now.Year - _startDate.Year) % _years == 0;
-            if(_months != null)
-                result &= (now.Month - _startDate.Month) % _months == 0;
-            if(_weeks != null)
-                result &= (now - _startDate).Days % _days == 0;
-            if(_days == null)
-                result &= now.Day == _startDate.Day;
-            return result;
-=======
-namespace SupplyDomain {
-    public class Period {
-        private int? days;
-        private int? weeks;
-        private int? months;
-        private int? years;
-        private DateTime startDate;
-        private HashSet<DayOfWeek> daysOfWeek = new HashSet<DayOfWeek>();
-
-        public Period(DateTime startDate) 
-        {
-            this.startDate = startDate;
-        }
-        public int? Days 
-        {
-            get { return days; }
-            set { days = value; }
-        }
-        public int? Weeks 
-        {
-            get { return weeks; }
-            set { weeks = value; }
-        }
-        public int? Months 
-        {
-            get { return months; }
-            set { months = value; }
-        }
-        public int? Years 
-        {
-            get { return years; }
-            set { years = value; }
         }
         public void SetDaysOfWeek(params DayOfWeek[] days)
         {
             foreach (var day in days)
 	        {
-		        daysOfWeek.Add(day);
+		        _daysOfWeek.Add(day);
 	        }
         }
         public bool IsDueDateToday 
@@ -115,12 +61,12 @@ namespace SupplyDomain {
 
         private bool IsCurrentDay()
         {
-            DateTime now;
+            DateTime now = DateTime.Now;
             bool result;
-            if (daysOfWeek.Count != 0)
-                result &= daysOfWeek.Any(day => day == now.DayOfWeek);
-            else if (days == null)
-                result &= now.Day == startDate.Day;
+            if (_daysOfWeek.Count != 0)
+                result &= _daysOfWeek.Any(day => day == now.DayOfWeek);
+            else if (_days == null)
+                result &= now.Day == _startDate.Day;
             else
                 return true;
             return false;
@@ -128,28 +74,25 @@ namespace SupplyDomain {
 
         private bool IsCurrentWeek()
         {
-            bool result;
-            if (weeks == null)
+            if (_weeks == null)
                 return true;
-            if (months == null)
-                return (DateTime.Now - startDate).Days % (weeks * 7) == 0; //Why days?
-            return 
+            if (_months == null)
+                return (DateTime.Now - _startDate).Weeks() % _weeks == 0;
+            return DateTime.Now.Week() %_weeks == 0;
         }
 
         private bool IsCurrentMonth()
         {
-            bool result;
-            if (months != null)
-                return (DateTime.Now.Month - startDate.Month) % months == 0;
+            if (_months != null)
+                return DateTime.Now.GetMonthCountOfBetween(_startDate) % _months == 0;
             return true;
         }
 
         private bool IsCurrentYear()
         {
-            if (years != null)
-                return (DateTime.Now.Year - startDate.Year) % years == 0;
+            if (_years != null)
+                return (DateTime.Now.Year - _startDate.Year) % _years == 0;
             return true;
->>>>>>> Stashed changes
         }
     }
 }

@@ -44,6 +44,8 @@
     <Compile Include="Delivery.cs" />
     <Compile Include="DeliveryItem.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="Misc\DateTimeExtenstion.cs" />
+    <Compile Include="Misc\TimeSpanExtension.cs" />
     <Compile Include="OrderedItem.cs" />
     <Compile Include="Period.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
