@@ -4,9 +4,9 @@ namespace SupplyDomain
 {
     public enum DeliveryStatus
     {
-        Expected, //Ожидается
-        Performed, //Выполняется
-        Completed //Завершено
+        Expected, 
+        Performed,
+        Completed 
     }
 
     public class DeliveryItem

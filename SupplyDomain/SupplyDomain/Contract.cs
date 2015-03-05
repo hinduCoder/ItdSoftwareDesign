@@ -8,27 +8,29 @@ namespace SupplyDomain
 {
     public class Contract
     {
-        private string _number;
+        private Guid _number;
         private DateTime _startDate;
         private List<string> _participants;
         private Period _period;
         private OrderedItem _orderedItem;
-        private DeliveryItem _deliveryItem;
+        private Delivery _delivery;
 
-        public Contract(string number, DateTime startDate, List<string> participants, Period period, OrderedItem orderedItem, DeliveryItem deliveryItem)
+        public Contract(DateTime startDate, OrderedItem orderedItem, Delivery delivery)
         {
-            _number = number;
+            _number = Guid.NewGuid();
             _startDate = startDate;
-            _participants = participants;
-            _period = period;
             _orderedItem = orderedItem;
-            _deliveryItem = deliveryItem;
+            _delivery = delivery;
         }
 
-        public string Number
+        public void SetPeriod(int monthRepetition)
+        {
+            _period = new Period(_startDate, monthRepetition);
+        }
+
+        public Guid Number
         {
             get { return _number; }
-            set { _number = value; }
         }
     }
 }
