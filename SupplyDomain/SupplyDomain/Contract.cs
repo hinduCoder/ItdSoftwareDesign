@@ -15,12 +15,12 @@ namespace SupplyDomain
         private OrderedItem _orderedItem;
         private Delivery _delivery;
 
-        public Contract(DateTime startDate, OrderedItem orderedItem, Delivery delivery)
+        public Contract(DateTime startDate, OrderedItem orderedItem)
         {
             _number = Guid.NewGuid();
             _startDate = startDate;
             _orderedItem = orderedItem;
-            _delivery = delivery;
+            _delivery = new Delivery(_startDate);
         }
 
         public void SetPeriod(int monthRepetition)
