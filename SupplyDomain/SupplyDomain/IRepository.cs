@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace SupplyDomain
 {
-    interface IRepository
+    interface IRepository<T>
     {
-        void Add(Item item);
-        void Delete(Item item);
-        Item FindByArticle(String article);
+        void Add(T item);
+        void Delete(T item);
     }
 }

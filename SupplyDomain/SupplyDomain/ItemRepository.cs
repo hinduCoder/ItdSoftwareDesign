@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SupplyDomain
 {
-    public class ItemRepository : IRepository
+    public class ItemRepository : IRepository<Item>
     {
         private List<Item> items = new List<Item>();
 
