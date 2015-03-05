@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SupplyDomain
 {
-    class Item
+    public class Item
     {
         private string _name;
         private string _description;
