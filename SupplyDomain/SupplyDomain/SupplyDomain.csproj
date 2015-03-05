@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Feonufry.CUI">
+      <HintPath>..\packages\Feonufry.CUI.1.0.0\lib\Feonufry.CUI.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -41,9 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contract.cs" />
+    <Compile Include="ContractRepository.cs" />
     <Compile Include="Delivery.cs" />
     <Compile Include="DeliveryItem.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="ItemRepository.cs" />
     <Compile Include="Misc\DateTimeExtenstion.cs" />
     <Compile Include="Misc\TimeSpanExtension.cs" />
     <Compile Include="OrderedItem.cs" />
