@@ -14,7 +14,7 @@ namespace SupplyDomain.Tests {
             var now = DateTime.Now;
             var period = new Period(now.AddMonths(-8));
             period.Months = 2;
-            Assert.IsTrue(period.IsToday);
+            Assert.IsTrue(period.IsDueDateToday);
         }
         [TestMethod]
         public void Test_Period_2() {
@@ -24,14 +24,14 @@ namespace SupplyDomain.Tests {
             var period = new Period(startPeriodDate);
             period.Months = 4;
             period.Years = 2;
-            Assert.IsTrue(period.IsToday);
+            Assert.IsTrue(period.IsDueDateToday);
         }
         [TestMethod]
         public void Test_Period_3() {
             var period = new Period(DateTime.Now.AddMonths(-8).AddYears(-6));
             period.Months = 3;
             period.Years = 2;
-            Assert.IsFalse(period.IsToday);
+            Assert.IsFalse(period.IsDueDateToday);
         }
     }
 }
