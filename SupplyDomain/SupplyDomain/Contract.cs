@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace SupplyDomain
 {
-    public class Contract
+    public class Contract : Entity
     {
-        private Guid _number;
         private DateTime _startDate;
         private List<string> _participants;
         private Period _period;
@@ -17,7 +16,6 @@ namespace SupplyDomain
 
         public Contract(DateTime startDate, OrderedItem orderedItem)
         {
-            _number = Guid.NewGuid();
             _startDate = startDate;
             _orderedItem = orderedItem;
             _delivery = new Delivery(_startDate);
@@ -26,11 +24,6 @@ namespace SupplyDomain
         public void SetPeriod(int monthRepetition)
         {
             _period = new Period(_startDate, monthRepetition);
-        }
-
-        public Guid Number
-        {
-            get { return _number; }
         }
     }
 }

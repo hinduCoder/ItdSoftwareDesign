@@ -2,7 +2,7 @@
 
 namespace SupplyDomain
 {
-    public class Delivery
+    public class Delivery : Entity
     {
         private DeliveryItem _startDate;
         private DeliveryItem _complextDate;

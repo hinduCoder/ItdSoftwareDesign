@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace SupplyDomain
 {
-    interface IRepository<T>
+    public interface IRepository<T> where T : Entity
     {
-        void Add(T item);
-        void Delete(T item);
+        T Get(Guid id);
+        void Add(T entity);
+        void Remove(T entity);
+
+        IQueryable<T> AsQueryable();
     }
 }

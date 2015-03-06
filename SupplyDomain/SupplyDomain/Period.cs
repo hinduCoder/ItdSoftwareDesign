@@ -1,8 +1,9 @@
 ﻿using System;
 using SupplyDomain.Misc;
 
-namespace SupplyDomain {
-    public class Period
+namespace SupplyDomain 
+{
+    public class Period : Entity
     {
         private int _monthRepeatnes;
         private DateTime _startDate;

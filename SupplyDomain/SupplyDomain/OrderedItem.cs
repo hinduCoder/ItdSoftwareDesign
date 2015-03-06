@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SupplyDomain
 {
-    public class OrderedItem
+    public class OrderedItem : Entity
     {
         private int _quantity;
         private Item _item;

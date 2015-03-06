@@ -9,7 +9,7 @@ namespace SupplyDomain
         Completed 
     }
 
-    public class DeliveryItem
+    public class DeliveryItem : Entity
     {
         private DeliveryStatus _status;
         private DateTime _date;
