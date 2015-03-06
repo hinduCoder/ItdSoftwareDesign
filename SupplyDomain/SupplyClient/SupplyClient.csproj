@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B2510B13-6033-4A40-A83D-B2184E2E0C84}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{6A663E43-2A73-4850-B4E4-81F38E1A6BE0}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SupplyDomain</RootNamespace>
-    <AssemblyName>SupplyDomain</AssemblyName>
+    <RootNamespace>SupplyClient</RootNamespace>
+    <AssemblyName>SupplyClient</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,7 +35,6 @@
     <Reference Include="Feonufry.CUI">
       <HintPath>..\packages\Feonufry.CUI.1.0.0\lib\Feonufry.CUI.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,22 +44,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DemoDataGenerator.cs" />
-    <Compile Include="Contract.cs" />
-    <Compile Include="Delivery.cs" />
-    <Compile Include="DeliveryItem.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="Item.cs" />
-    <Compile Include="MemoryRepository.cs" />
-    <Compile Include="Misc\DateTimeExtenstion.cs" />
-    <Compile Include="Misc\TimeSpanExtension.cs" />
-    <Compile Include="OrderedItem.cs" />
-    <Compile Include="Period.cs" />
+    <Compile Include="ActionExecutionContextExtension.cs" />
+    <Compile Include="ContractActions.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatusesAction.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SupplyDomain\SupplyDomain.csproj">
+      <Project>{b2510b13-6033-4a40-a83d-b2184e2e0c84}</Project>
+      <Name>SupplyDomain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
