@@ -11,19 +11,33 @@ namespace SupplyDomain
         private DateTime _startDate;
         private List<string> _participants;
         private Period _period;
-        private OrderedItem _orderedItem;
+        private MemoryRepository<OrderedItem> _orderedItemsRepository = new MemoryRepository<OrderedItem>();
         private Delivery _delivery;
 
-        public Contract(DateTime startDate, OrderedItem orderedItem)
+        public Contract(DateTime startDate)
         {
             _startDate = startDate;
-            _orderedItem = orderedItem;
             _delivery = new Delivery(_startDate);
         }
 
         public void SetPeriod(int monthRepetition)
         {
             _period = new Period(_startDate, monthRepetition);
+        }
+
+        public Delivery Delivery
+        {
+            get { return _delivery; }
+        }
+
+        public void AddOrderedItem(OrderedItem orderedItem)
+        {
+            _orderedItemsRepository.Add(orderedItem);
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{0} : {1}", Id.ToString(), _startDate);
         }
     }
 }

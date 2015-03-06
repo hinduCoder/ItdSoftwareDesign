@@ -6,7 +6,7 @@ namespace SupplyDomain
     {
         private Guid _id;
 
-        public Guid Id
+        protected Guid Id
         {
             get { return _id; }
         }

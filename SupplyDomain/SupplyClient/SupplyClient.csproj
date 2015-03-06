@@ -48,6 +48,7 @@
     <Compile Include="ContractActions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatusesAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

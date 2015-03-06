@@ -20,7 +20,6 @@ namespace SupplyDomain
         public DeliveryItem StartDate
         {
             get { return _startDate; }
-            set { _startDate = value; }
         }
 
         public DeliveryItem ComplextDate
@@ -40,5 +39,6 @@ namespace SupplyDomain
             get { return _deliveryDate; }
             set { _deliveryDate = value; }
         }
+
     }
 }
