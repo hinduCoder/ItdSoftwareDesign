@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SupplyDomain.Entities;
 
-namespace SupplyDomain
+namespace SupplyDomain.DataAccess
 {
     public class MemoryRepository<T> : IRepository<T> where T : Entity
     {
@@ -10,7 +11,7 @@ namespace SupplyDomain
 
         public T Get(Guid id)
         {
-            return _list.Find(x => x.Id == id);
+            return _list.FirstOrDefault(x => x.Id == id);
         }
 
         public void Add(T entity)

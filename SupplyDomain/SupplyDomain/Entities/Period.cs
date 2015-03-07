@@ -1,30 +1,34 @@
 ﻿using System;
 using SupplyDomain.Misc;
 
-namespace SupplyDomain 
+namespace SupplyDomain.Entities 
 {
-    public class Period : Entity
+    public class Period
     {
         private int _monthRepetition;
         private DateTime _startDate;
+        private DateTime _closeDate;
 
         public int MonthRepetition
         {
             get { return _monthRepetition; }
-            set
-            {
-                if (value <= 0)
-                {
-                    throw new ArgumentException("Months repeatness may be bigger then 0");
-                }
-                _monthRepetition = value;
-            }
         }
 
-        public Period(DateTime startDate, int monthRepetition)
+        public DateTime StartDate
+        {
+            get { return _startDate; }
+        }
+
+        public DateTime CloseDate
+        {
+            get { return _closeDate; }
+        }
+
+        public Period(DateTime startDate, int monthRepetition, DateTime closeDate)
         {
             _startDate = startDate;
             _monthRepetition = monthRepetition;
+            _closeDate = closeDate;
         }
 
         public bool IsDueDateToday

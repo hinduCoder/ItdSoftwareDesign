@@ -1,4 +1,7 @@
-﻿namespace SupplyDomain
+﻿using SupplyDomain.DataAccess;
+using SupplyDomain.Entities;
+
+namespace SupplyDomain
 {
     public class DemoDataGenerator
     {

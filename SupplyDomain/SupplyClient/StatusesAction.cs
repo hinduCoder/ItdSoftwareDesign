@@ -1,6 +1,8 @@
 ﻿using Feonufry.CUI.Actions;
 using Feonufry.CUI.Menu.Builders;
 using SupplyDomain;
+using SupplyDomain.DataAccess;
+using SupplyDomain.Entities;
 
 namespace SupplyClient
 {

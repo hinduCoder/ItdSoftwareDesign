@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SupplyDomain
+﻿namespace SupplyDomain.Entities
 {
     public class OrderedItem : Entity
     {
+        private Contract _contract;
         private int _quantity;
         private Item _item;
 
@@ -16,10 +11,16 @@ namespace SupplyDomain
             get { return _quantity; }
         }
 
-        public OrderedItem(int quantity, Item item)
+        public Item Item
+        {
+            get { return _item; }
+        }
+
+        public OrderedItem(Contract contract, int quantity, Item item)
         {
             _quantity = quantity;
             _item = item;
+            _contract = contract;
         }
     }
 }

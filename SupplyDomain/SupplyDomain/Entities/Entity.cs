@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace SupplyDomain
+namespace SupplyDomain.Entities
 {
     public abstract class Entity
     {
         private Guid _id;
 
-        protected Guid Id
+        public Guid Id
         {
             get { return _id; }
         }
