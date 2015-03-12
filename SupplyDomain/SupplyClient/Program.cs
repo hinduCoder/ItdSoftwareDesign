@@ -1,6 +1,7 @@
 ﻿
 using Feonufry.CUI.Menu.Builders;
 using SupplyDomain;
+using SupplyDomain.Api;
 using SupplyDomain.DataAccess;
 using SupplyDomain.Entities;
 
@@ -11,7 +12,8 @@ namespace SupplyClient
         static void Main(string[] args)
         {
             var contractsRepository = new MemoryRepository<Contract>();
-            var itemsRepository = new MemoryRepository<Item>();
+            var itemsRepository = new ItemApi(new MemoryRepository<Item>());
+                
             var contractAction = new ContractActions(contractsRepository, itemsRepository);
             var demoData = new DemoDataGenerator(itemsRepository);
             demoData.Generate();
