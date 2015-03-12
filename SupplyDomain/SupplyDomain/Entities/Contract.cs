@@ -9,9 +9,10 @@ namespace SupplyDomain.Entities
         private readonly IList<OrderedItem> _orderedItems = new List<OrderedItem>();
         private string _number;
 
-        public Contract(string number)
+        public Contract(string number, Period period)
         {
             _number = number;
+            _period = period;
         }
 
         public void AddOrderedItem(OrderedItem orderedItem)
