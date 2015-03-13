@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Feonufry.CUI.Actions;
 using Feonufry.CUI.Menu.Builders;
 using SupplyDomain;
@@ -29,8 +30,13 @@ namespace SupplyClient
             var itemsSubMenu = new MenuBuilder().Repeatable().Title("Выберите контракт");
             foreach (var contractDto in _contractApi.GetAllContracts())
             {
-                ContractDto dto = contractDto;
-                itemsSubMenu.Item().AlwaysAvailable().Title(contractDto.ToString()).Action(ctx => ChangeStatus(ctx, dto)); //TODO выводить только контракты с деливери
+                ContractDto dto =
+                    _deliveryApi.GetAllDeliveries()
+                        .Select(d => d.ContractDto)
+                        .SingleOrDefault(c => c.Id == contractDto.Id);
+                if (dto == null)
+                    continue;
+                itemsSubMenu.Item().Title(contractDto.ToString()).Action(ctx => ChangeStatus(ctx, dto));
 
             }
             itemsSubMenu.Exit("Назад")
@@ -49,10 +55,7 @@ namespace SupplyClient
             if (nextStatus != null)
                 context.Out.WriteLine("Следующий доступный статус: {0}", nextStatus);
             else
-            {
-                context.Out.WriteLine("Vsyo uzhe epta!");
                 return;
-            }
             new MenuBuilder().RunnableOnce()
                 .Item("Изменить статус", _ => _deliveryApi.SetStatus(deliveryDto, nextStatus.Value))
                 .Exit("Отмена").GetMenu().Run();
