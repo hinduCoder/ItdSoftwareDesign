@@ -30,6 +30,31 @@ namespace SupplyDomain.Entities
             get { return _startDate; }
         }
 
+        public Contract Contract
+        {
+            get { return _contract; }
+        }
+
+        public DeliveryStatus Status
+        {
+            get { return _status; }
+        }
+
+        public DateTime? ComplextDate
+        {
+            get { return _complextDate; }
+        }
+
+        public DateTime? ShipmetDate
+        {
+            get { return _shipmetDate; }
+        }
+
+        public DateTime? DeliveryDate
+        {
+            get { return _deliveryDate; }
+        }
+
         public void SetComplextStatus()
         {
             _complextDate = DateTime.Now;

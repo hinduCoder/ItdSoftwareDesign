@@ -10,17 +10,23 @@ namespace SupplyClient
     {
         static void Main(string[] args)
         {
+            var deliveryRepository = new MemoryRepository<Delivery>();
             var contractsRepository = new MemoryRepository<Contract>();
             var itemsRepository = new MemoryRepository<Item>();
+            var orderedItemsRepository = new MemoryRepository<OrderedItem>();
 
             var demoData = new DemoDataGenerator(itemsRepository, contractsRepository);
             demoData.Generate();
 
             var itemApi = new ItemApi(itemsRepository);
-            var contractApi = new ContractApi(contractsRepository);
+            
+            var deliveryApi = new DeliveryApi(deliveryRepository, contractsRepository);
+            var contractApi = new ContractApi(contractsRepository, orderedItemsRepository);
 
             var contractAction = new ContractActions(contractApi, itemApi);
-            
+            var checkAction = new CheckContractsAction(contractApi, deliveryApi);
+            var statusesAction = new StatusesAction(contractApi, deliveryApi);
+
             new MenuBuilder()
                 .Title("Снабжение")
                 .Repeatable()
@@ -28,11 +34,12 @@ namespace SupplyClient
                     .Item("Введите данные для нового контракта", contractAction)
                     .Exit("Назад")
                     .End()
-                .Submenu("Изменение состояний")
+                .Submenu("Состояния")
+                    .Item("Изменить", statusesAction)
                     .Exit("Назад")
                     .End()
-                .Submenu("Тест") //TODO убрать неприличное слово
-                    .Item("Проверить контракты", c => {/*Todo epta*/ })
+                .Submenu("Тест")
+                    .Item("Проверить контракты", checkAction)
                     .Exit("Назад")
                     .End()
                 .Exit("Закрыть").GetMenu().Run();
