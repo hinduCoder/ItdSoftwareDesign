@@ -50,6 +50,7 @@
     <Compile Include="Api\DeliveryDto.cs" />
     <Compile Include="Api\ItemApi.cs" />
     <Compile Include="Api\ItemDto.cs" />
+    <Compile Include="Api\OrderedItemApi.cs" />
     <Compile Include="Api\OrderedItemDto.cs" />
     <Compile Include="DateTimeExtenstion.cs" />
     <Compile Include="DemoDataGenerator.cs" />

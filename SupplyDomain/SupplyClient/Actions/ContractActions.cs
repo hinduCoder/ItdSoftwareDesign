@@ -26,7 +26,6 @@ namespace SupplyClient
             var contractStartDate = context.InputDateTime("Введите дату начала действия договора");
             var contractCloseDate = context.InputDateTime("Введите дату окончания действия договора");
             var contractMonthRepetition = context.InputInt("Введите повторябельность"); //TODO Адекватное слово
-
             var contract = new ContractDto(contractNumber, new Period(contractCloseDate, contractMonthRepetition, contractCloseDate));
             ChooseItemsForContract(context, contract);
             _contractsApi.AddNewContract(contract);
@@ -49,11 +48,11 @@ namespace SupplyClient
                 .GetMenu().Run();
         }
 
-        public void AddNewOrderedItem(ActionExecutionContext context, ItemDto item, ContractDto contract)
+        public void AddNewOrderedItem(ActionExecutionContext context, ItemDto item, ContractDto contractDto)
         {
             var quantity = context.InputInt("Введите количество товара");
-            var orderedItem = new OrderedItem(contract, quantity, item);
-            contract.AddOrderedItem(orderedItem);
+            var orderedItemDto = new OrderedItemDto {Quantity = quantity, Contract = contractDto, Item = item};
+            contractDto.OrderedItems.Add(orderedItemDto);
         } 
     }
 }
