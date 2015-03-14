@@ -6,7 +6,7 @@ namespace SupplyDomain.Entities
     public enum DeliveryStatus
     {
         Started,
-        Complext,
+        Complect,
         Shipment,
         Delivery
     }
@@ -15,7 +15,7 @@ namespace SupplyDomain.Entities
         private Contract _contract;
         private DeliveryStatus _status = DeliveryStatus.Started;
         private DateTime _startDate; 
-        private DateTime? _complextDate;
+        private DateTime? _complectDate;
         private DateTime? _shipmetDate;
         private DateTime? _deliveryDate;
 
@@ -42,7 +42,7 @@ namespace SupplyDomain.Entities
 
         public DateTime? ComplextDate
         {
-            get { return _complextDate; }
+            get { return _complectDate; }
         }
 
         public DateTime? ShipmetDate
@@ -57,8 +57,8 @@ namespace SupplyDomain.Entities
 
         public void SetComplextStatus()
         {
-            _complextDate = DateTime.Now;
-            _status = DeliveryStatus.Complext;
+            _complectDate = DateTime.Now;
+            _status = DeliveryStatus.Complect;
         }
 
         public void SetShipmentStatus()

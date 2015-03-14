@@ -19,6 +19,7 @@ namespace SupplyClient
         public void Perform(ActionExecutionContext context)
         {
             DateTime date = context.InputDateTime("Введите дату проверки");
+            //выбирать не все api
             var allContracts = _contractApi.GetAllContracts();
             foreach (var contractDto in allContracts)
             {

@@ -27,9 +27,9 @@ namespace SupplyDomain.Api
             var contract = new Contract(contractDto.Number, contractDto.Period);
             foreach (var orderedItemDto in contractDto.OrderedItems)
             {
-                contract.AddOrderedItem(_orderedItemRepository
-                    .AsQueryable()
-                    .Single(o => o.Id == orderedItemDto.Id));
+                var item = _itemsRepository.Get(orderedItemDto.ItemId);
+                var orderedItem = new OrderedItem(contract, orderedItemDto.Quantity);
+                _orderedItemRepository.Add(orderedItem);
             }
             _contractsRepository.Add(contract);
         }

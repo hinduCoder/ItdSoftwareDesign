@@ -1,5 +1,5 @@
 ﻿using System;
-using SupplyDomain.Misc;
+using SupplyDomain;
 
 namespace SupplyDomain.Entities 
 {

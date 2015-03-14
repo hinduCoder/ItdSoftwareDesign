@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SupplyDomain.Misc
+namespace SupplyDomain
 {
     public static class DateTimeExtenstion
     {

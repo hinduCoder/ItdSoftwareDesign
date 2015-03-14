@@ -29,7 +29,8 @@ namespace SupplyDomain.Api
                     ShipmetDate = d.ShipmetDate,
                     StartDate = d.StartDate,
                     Status = d.Status
-                }).ToList();
+                })
+                .ToList();
         }
 
         public void AddNewDelivery(ContractDto contractDto)
@@ -43,7 +44,7 @@ namespace SupplyDomain.Api
         {
             switch (status)
             {
-                case DeliveryStatus.Complext: 
+                case DeliveryStatus.Complect: 
                     SetComplextStatus(deliveryDto);
                     break;
                 case DeliveryStatus.Shipment: 

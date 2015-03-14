@@ -67,8 +67,8 @@ namespace SupplyClient
             switch (status)
             {
                 case DeliveryStatus.Started: 
-                    return DeliveryStatus.Complext;
-                case DeliveryStatus.Complext: 
+                    return DeliveryStatus.Complect;
+                case DeliveryStatus.Complect: 
                     return DeliveryStatus.Shipment;
                 case DeliveryStatus.Shipment: 
                     return DeliveryStatus.Delivery;
