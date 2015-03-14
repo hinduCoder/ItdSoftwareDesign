@@ -5,8 +5,8 @@ namespace SupplyDomain.Api
     public class OrderedItemDto
     {
         public Guid Id { get; set; }
-        public ItemDto Item { get; set; }
-        public ContractDto Contract { get; set; }
+        public Guid ItemId { get; set; }
+        public Guid ContractId { get; set; }
         public int Quantity { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net.Mime;
 using Feonufry.CUI.Actions;
 using Feonufry.CUI.Menu.Builders;
@@ -25,14 +26,17 @@ namespace SupplyClient
             var contractNumber = context.InputString("Введите номер контракта");
             var contractStartDate = context.InputDateTime("Введите дату начала действия договора");
             var contractCloseDate = context.InputDateTime("Введите дату окончания действия договора");
-            var contractMonthRepetition = context.InputInt("Введите повторябельность"); //TODO Адекватное слово
-            var contract = new ContractDto(contractNumber, new Period(contractCloseDate, contractMonthRepetition, contractCloseDate));
+            var contractMonthRepetition = context.InputInt("Введите периодичность");
+            var contract = new ContractInput{ 
+                Number = contractNumber, 
+                Period = new Period(contractCloseDate, contractMonthRepetition, contractCloseDate)
+            };
             ChooseItemsForContract(context, contract);
             _contractsApi.AddNewContract(contract);
         }
 
 
-        public void ChooseItemsForContract(ActionExecutionContext context, ContractDto contract)
+        public void ChooseItemsForContract(ActionExecutionContext context, ContractInput contract)
         {
             var itemsSubMenu = new MenuBuilder().Repeatable().Title("Выбора товара");
             var items = _itemApi.GetAllItems();
@@ -42,17 +46,17 @@ namespace SupplyClient
                 itemsSubMenu.Item()
                     .AlwaysAvailable()
                     .Title(item.Name)
-                    .Action(ctx => AddNewOrderedItem(ctx, itemCaptured, contract));
+                    .Action(ctx => AddNewOrderedItem(ctx, itemCaptured.Id, contract));
             }
             itemsSubMenu.Exit("Назад")
                 .GetMenu().Run();
         }
 
-        public void AddNewOrderedItem(ActionExecutionContext context, ItemDto item, ContractDto contractDto)
+        public void AddNewOrderedItem(ActionExecutionContext context, Guid itemId, ContractInput contractInput)
         {
             var quantity = context.InputInt("Введите количество товара");
-            var orderedItemDto = new OrderedItemDto {Quantity = quantity, Contract = contractDto, Item = item};
-            contractDto.OrderedItems.Add(orderedItemDto);
+            var orderedItemInput = new OrderedItemInput {Quantity = quantity, ItemId = itemId};
+            contractInput.OrderedItems.Add(orderedItemInput);
         } 
     }
 }

@@ -46,12 +46,13 @@
   <ItemGroup>
     <Compile Include="Api\ContractApi.cs" />
     <Compile Include="Api\ContractDto.cs" />
+    <Compile Include="Api\ContractInput.cs" />
     <Compile Include="Api\DeliveryApi.cs" />
     <Compile Include="Api\DeliveryDto.cs" />
     <Compile Include="Api\ItemApi.cs" />
     <Compile Include="Api\ItemDto.cs" />
-    <Compile Include="Api\OrderedItemApi.cs" />
     <Compile Include="Api\OrderedItemDto.cs" />
+    <Compile Include="Api\OrderedItemInput.cs" />
     <Compile Include="DateTimeExtenstion.cs" />
     <Compile Include="DemoDataGenerator.cs" />
     <Compile Include="Entities\Contract.cs" />

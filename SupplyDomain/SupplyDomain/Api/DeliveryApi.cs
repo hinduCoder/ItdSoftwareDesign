@@ -24,7 +24,7 @@ namespace SupplyDomain.Api
                 {
                     Id = d.Id,
                     ComplextDate = d.ComplextDate,
-                    ContractDto = ContractDto.FromContract(d.Contract),
+                    ContractId = d.Contract.Id,
                     DeliveryDate = d.DeliveryDate,
                     ShipmetDate = d.ShipmetDate,
                     StartDate = d.StartDate,
@@ -33,11 +33,9 @@ namespace SupplyDomain.Api
                 .ToList();
         }
 
-        public void AddNewDelivery(ContractDto contractDto)
+        public void AddNewDelivery(Guid contractId)
         {
-            _deliveryRepository.Add(new Delivery(_contractRepository
-                .AsQueryable()
-                .Single(c => contractDto.Id == c.Id )));
+            _deliveryRepository.Add(new Delivery(_contractRepository.Get(contractId)));
         }
 
         public void SetStatus(DeliveryDto deliveryDto, DeliveryStatus status)

@@ -8,28 +8,30 @@ namespace SupplyDomain.Api
     public class ContractApi
     {
         private readonly IRepository<Contract> _contractsRepository;
-        private readonly IRepository<OrderedItem> _orderedItemRepository;
+        private readonly IRepository<OrderedItem> _orderedItemsRepository;
+        private readonly IRepository<Item> _itemsRepository;
 
-        public ContractApi(IRepository<Contract> contractsRepository, IRepository<OrderedItem> orderedItemRepository)
+        public ContractApi(IRepository<Contract> contractsRepository, IRepository<OrderedItem> orderedItemsRepository, IRepository<Item> itemsRepository)
         {
             _contractsRepository = contractsRepository;
-            _orderedItemRepository = orderedItemRepository;
+            _orderedItemsRepository = orderedItemsRepository;
+            _itemsRepository = itemsRepository;
         }
 
         public List<ContractDto> GetAllContracts()
         {
             return _contractsRepository.AsQueryable()
-                .Select(c => new ContractDto(c.Number, c.Period) {Id = c.Id}).ToList();
+                .Select(c => new ContractDto{ Number = c.Number, Period = c.Period, Id = c.Id}).ToList();
         }
 
-        public void AddNewContract(ContractDto contractDto)
+        public void AddNewContract(ContractInput contractInput)
         {
-            var contract = new Contract(contractDto.Number, contractDto.Period);
-            foreach (var orderedItemDto in contractDto.OrderedItems)
+            var contract = new Contract(contractInput.Number, contractInput.Period);
+            foreach (var orderedItemDto in contractInput.OrderedItems)
             {
                 var item = _itemsRepository.Get(orderedItemDto.ItemId);
-                var orderedItem = new OrderedItem(contract, orderedItemDto.Quantity);
-                _orderedItemRepository.Add(orderedItem);
+                var orderedItem = new OrderedItem(contract, orderedItemDto.Quantity, item);
+                _orderedItemsRepository.Add(orderedItem);
             }
             _contractsRepository.Add(contract);
         }

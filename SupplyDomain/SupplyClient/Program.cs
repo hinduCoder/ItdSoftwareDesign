@@ -19,9 +19,8 @@ namespace SupplyClient
             demoData.Generate();
 
             var itemApi = new ItemApi(itemsRepository);
-            
             var deliveryApi = new DeliveryApi(deliveryRepository, contractsRepository);
-            var contractApi = new ContractApi(contractsRepository, orderedItemsRepository);
+            var contractApi = new ContractApi(contractsRepository, orderedItemsRepository, itemsRepository);
 
             var contractAction = new ContractActions(contractApi, itemApi);
             var checkAction = new CheckContractsAction(contractApi, deliveryApi);

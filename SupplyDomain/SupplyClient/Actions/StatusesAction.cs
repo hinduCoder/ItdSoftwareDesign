@@ -30,14 +30,9 @@ namespace SupplyClient
             var itemsSubMenu = new MenuBuilder().Repeatable().Title("Выберите контракт");
             foreach (var contractDto in _contractApi.GetAllContracts())
             {
-                ContractDto dto =
-                    _deliveryApi.GetAllDeliveries()
-                        .Select(d => d.ContractDto)
-                        .SingleOrDefault(c => c.Id == contractDto.Id);
-                if (dto == null)
-                    continue;
-                itemsSubMenu.Item().Title(contractDto.ToString()).Action(ctx => ChangeStatus(ctx, dto));
-
+                //TODO load contracts only with delivery
+                var contractDtoCaptured = contractDto;
+                itemsSubMenu.Item().Title(ConvertContractDtoToString(contractDto)).Action(ctx => ChangeStatus(ctx, contractDtoCaptured));
             }
             itemsSubMenu.Exit("Назад")
                 .GetMenu().Run();
@@ -45,10 +40,10 @@ namespace SupplyClient
 
         public void ChangeStatus(ActionExecutionContext context, ContractDto contractDto)
         {
-            context.Out.WriteLine(contractDto.ToString());
+            context.Out.WriteLine(ConvertContractDtoToString(contractDto));
             var deliveryDto = _deliveryApi
                 .GetAllDeliveries()
-                .Single(d => d.ContractDto.Id == contractDto.Id);
+                .Single(d => d.ContractId == contractDto.Id);
             var currentStatus = deliveryDto.Status;
             context.Out.WriteLine("Текущий статус: {0}", currentStatus.ToString());
             var nextStatus = GetNextStatus(currentStatus);
@@ -75,6 +70,11 @@ namespace SupplyClient
                 default:
                     return null;
             }
+        }
+
+        private string ConvertContractDtoToString(ContractDto contractDto) {
+            return String.Format("Number: {0}\nStart Date: {1}\nMonth repetition: {2}\nClose Date: {3}",
+               contractDto.Number, contractDto.Period.StartDate, contractDto.Period.MonthRepetition, contractDto.Period.CloseDate);
         }
     }
 }

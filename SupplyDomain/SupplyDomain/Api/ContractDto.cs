@@ -7,22 +7,8 @@ namespace SupplyDomain.Api
     public class ContractDto
     {
         public Guid Id { get; set; }
-
-        public ContractDto()
-        {
-            OrderedItems = new List<OrderedItemDto>();
-        }
-
-        public ContractDto(string number, Period period)
-            :this()
-        {
-            Number = number;
-            Period = period;
-        }
-
         public Period Period { get; set; }
         public string Number { get; set; }
-        public List<OrderedItemDto> OrderedItems { get; private set; }
 
         public override string ToString()
         {
@@ -32,7 +18,7 @@ namespace SupplyDomain.Api
 
         public static ContractDto FromContract(Contract contract)
         {
-            return new ContractDto(contract.Number, contract.Period) { Id = contract.Id };
+            return new ContractDto { Number = contract.Number, Period = contract.Period, Id = contract.Id };
         }
     }
 }
