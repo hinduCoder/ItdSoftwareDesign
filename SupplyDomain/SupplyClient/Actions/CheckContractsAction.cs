@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Feonufry.CUI.Actions;
 using Feonufry.CUI.Menu.Builders;
 using SupplyDomain.Api;
@@ -20,17 +21,12 @@ namespace SupplyClient
         public void Perform(ActionExecutionContext context)
         {
             DateTime date = context.InputDateTime("Введите дату проверки");
-            //выбирать не все api
-            var allContracts = _contractApi.GetAllContracts();
-            foreach (var contractDto in allContracts)
+            var contracts = _contractApi.GetAllContracts().Where(c => c.Period.IsDueDate(date));
+            foreach (var contractDto in contracts)
             {
-                if (contractDto.Period.StartDate == date)
-                {
-                    _deliveryApi.AddNewDelivery(contractDto.Id);
-                    context.Out.WriteLine(ConvertContractDtoToString(contractDto));
-                }
+                _deliveryApi.AddNewDelivery(contractDto.Id);
+                context.Out.WriteLine(ConvertContractDtoToString(contractDto));
             }
-
         }
 
         private string ConvertContractDtoToString(ContractDto contractDto)

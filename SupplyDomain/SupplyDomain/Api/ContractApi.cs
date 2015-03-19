@@ -21,12 +21,12 @@ namespace SupplyDomain.Api
         public List<ContractDto> GetAllContracts()
         {
             return _contractsRepository.AsQueryable()
-                .Select(c => new ContractDto{ Number = c.Number, Period = c.Period, Id = c.Id}).ToList();
+                .Select(c => new ContractDto{ Number = c.Number, Period = c.Period, Id = c.Id, Participant = c.Participant}).ToList();
         }
 
         public void AddNewContract(ContractInput contractInput)
         {
-            var contract = new Contract(contractInput.Number, contractInput.Period);
+            var contract = new Contract(contractInput.Number, contractInput.Period, contractInput.Participant);
             foreach (var orderedItemDto in contractInput.OrderedItems)
             {
                 var item = _itemsRepository.Get(orderedItemDto.ItemId);

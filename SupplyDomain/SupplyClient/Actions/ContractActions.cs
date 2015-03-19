@@ -26,10 +26,12 @@ namespace SupplyClient
             var contractNumber = context.InputString("Введите номер контракта");
             var contractStartDate = context.InputDateTime("Введите дату начала действия договора");
             var contractCloseDate = context.InputDateTime("Введите дату окончания действия договора");
+            var contractParticipant = context.InputString("Введите чувака");
             var contractMonthRepetition = context.InputInt("Введите периодичность");
             var contract = new ContractInput{ 
                 Number = contractNumber, 
-                Period = new Period(contractCloseDate, contractMonthRepetition, contractCloseDate)
+                Period = new Period(contractCloseDate, contractMonthRepetition, contractCloseDate),
+                Participant = contractParticipant
             };
             ChooseItemsForContract(context, contract);
             _contractsApi.AddNewContract(contract);

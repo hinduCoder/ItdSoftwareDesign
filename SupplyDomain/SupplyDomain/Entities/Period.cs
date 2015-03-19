@@ -31,9 +31,9 @@ namespace SupplyDomain.Entities
             _closeDate = closeDate;
         }
 
-        public bool IsDueDateToday
+        public bool IsDueDate(DateTime date)
         {
-            get { return DateTime.Now.GetMonthCountOfBetween(_startDate) % MonthRepetition == 0; }
+            return date.ПроверитьЕслиПериодичностьСоответствуетРазницеМеждуДатами(_startDate, MonthRepetition) && date < _closeDate;
         }
     }
 }

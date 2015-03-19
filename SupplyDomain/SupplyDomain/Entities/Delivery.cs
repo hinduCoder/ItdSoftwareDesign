@@ -3,25 +3,19 @@ using System.Security.Cryptography;
 
 namespace SupplyDomain.Entities
 {
-    public enum DeliveryStatus
-    {
-        Started,
-        Complect,
-        Shipment,
-        Delivery
-    }
     public class Delivery : Entity
     {
         private Contract _contract;
         private DeliveryStatus _status = DeliveryStatus.Started;
         private DateTime _startDate; 
         private DateTime? _complectDate;
-        private DateTime? _shipmetDate;
+        private DateTime? _shipmentDate;
         private DateTime? _deliveryDate;
 
         public Delivery(Contract contract)
         {
             _contract = contract;
+            _contract.IsActive = true;
             _startDate = DateTime.Now;
         }
 
@@ -45,9 +39,9 @@ namespace SupplyDomain.Entities
             get { return _complectDate; }
         }
 
-        public DateTime? ShipmetDate
+        public DateTime? ShipmentDate
         {
-            get { return _shipmetDate; }
+            get { return _shipmentDate; }
         }
 
         public DateTime? DeliveryDate
@@ -63,7 +57,7 @@ namespace SupplyDomain.Entities
 
         public void SetShipmentStatus()
         {
-            _shipmetDate = DateTime.Now;
+            _shipmentDate = DateTime.Now;
             _status = DeliveryStatus.Shipment;
         }
 

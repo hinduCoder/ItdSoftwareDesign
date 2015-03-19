@@ -37,7 +37,7 @@ namespace SupplyClient
                     .Item("Изменить", statusesAction)
                     .Exit("Назад")
                     .End()
-                .Submenu("Тест")
+                .Submenu("Тест") //TODO мы забыли
                     .Item("Проверить контракты", checkAction)
                     .Exit("Назад")
                     .End()

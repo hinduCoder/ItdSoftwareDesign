@@ -26,7 +26,7 @@ namespace SupplyDomain.Api
                     ComplextDate = d.ComplextDate,
                     ContractId = d.Contract.Id,
                     DeliveryDate = d.DeliveryDate,
-                    ShipmetDate = d.ShipmetDate,
+                    ShipmetDate = d.ShipmentDate,
                     StartDate = d.StartDate,
                     Status = d.Status
                 })
@@ -38,42 +38,24 @@ namespace SupplyDomain.Api
             _deliveryRepository.Add(new Delivery(_contractRepository.Get(contractId)));
         }
 
-        public void SetStatus(DeliveryDto deliveryDto, DeliveryStatus status)
+        public void SetComplectStatus(Guid deliveryId)
         {
-            switch (status)
-            {
-                case DeliveryStatus.Complect: 
-                    SetComplextStatus(deliveryDto);
-                    break;
-                case DeliveryStatus.Shipment: 
-                    SetShipmentStatus(deliveryDto);
-                    break;
-                case DeliveryStatus.Delivery: 
-                    SetDeliveryDate(deliveryDto); 
-                    break;
-                default: 
-                    throw new ArgumentException(String.Format("It's impossible to change status to {0}", status));
-            }
+            GetDelivery(deliveryId).SetComplextStatus();
         }
 
-        public void SetComplextStatus(DeliveryDto deliveryDto)
+        public void SetShipmentStatus(Guid deliveryId)
         {
-            GetDelivery(deliveryDto).SetComplextStatus();
+            GetDelivery(deliveryId).SetShipmentStatus();
         }
 
-        public void SetShipmentStatus(DeliveryDto deliveryDto)
+        public void SetDeliveryDate(Guid deliveryId)
         {
-            GetDelivery(deliveryDto).SetShipmentStatus();
+            GetDelivery(deliveryId).SetDeliveryDate();
         }
 
-        public void SetDeliveryDate(DeliveryDto deliveryDto)
+        private Delivery GetDelivery(Guid deliveryId)
         {
-            GetDelivery(deliveryDto).SetDeliveryDate();
-        }
-
-        private Delivery GetDelivery(DeliveryDto deliveryDto)
-        {
-            return _deliveryRepository.AsQueryable().Single(d => d.Id == deliveryDto.Id);
+            return _deliveryRepository.Get(deliveryId);
         }
     }
 }

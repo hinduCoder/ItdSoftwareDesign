@@ -28,11 +28,11 @@ namespace SupplyClient
         public void ChooseContract(ActionExecutionContext context)
         {
             var itemsSubMenu = new MenuBuilder().Repeatable().Title("Выберите контракт");
-            foreach (var contractDto in _contractApi.GetAllContracts())
+            var contracts = _contractApi.GetAllContracts().Join(_deliveryApi.GetAllDeliveries(), c => c.Id, d => d.ContractId, (c, d) => c).ToList();
+            foreach (var contractDto in contracts)
             {
-                //TODO load contracts only with delivery
                 var contractDtoCaptured = contractDto;
-                itemsSubMenu.Item().Title(ConvertContractDtoToString(contractDto)).Action(ctx => ChangeStatus(ctx, contractDtoCaptured));
+                itemsSubMenu.Item().Title(ConvertContractToBriefString(contractDto)).Action(ctx => ChangeStatus(ctx, contractDtoCaptured));
             }
             itemsSubMenu.Exit("Назад")
                 .GetMenu().Run();
@@ -44,36 +44,38 @@ namespace SupplyClient
             var deliveryDto = _deliveryApi
                 .GetAllDeliveries()
                 .Single(d => d.ContractId == contractDto.Id);
-            var currentStatus = deliveryDto.Status;
-            context.Out.WriteLine("Текущий статус: {0}", currentStatus.ToString());
-            var nextStatus = GetNextStatus(currentStatus);
-            if (nextStatus != null)
-                context.Out.WriteLine("Следующий доступный статус: {0}", nextStatus);
-            else
-                return;
+            context.Out.WriteLine("Cтатус: {0}", ConvertStatusToString(deliveryDto.Status));
+
             new MenuBuilder().RunnableOnce()
-                .Item("Изменить статус", _ => _deliveryApi.SetStatus(deliveryDto, nextStatus.Value))
+                .Item("Укомплектовать", ctx => _deliveryApi.SetComplectStatus(deliveryDto.Id))
+                .Item("Отправить", ctx => _deliveryApi.SetShipmentStatus(deliveryDto.Id))
+                .Item("Отгрузить", ctx => _deliveryApi.SetDeliveryDate(deliveryDto.Id))
                 .Exit("Отмена").GetMenu().Run();
 
         }
 
-        private DeliveryStatus? GetNextStatus(DeliveryStatus status)
+        private string ConvertStatusToString(DeliveryStatus status)
         {
             switch (status)
             {
-                case DeliveryStatus.Started: 
-                    return DeliveryStatus.Complect;
-                case DeliveryStatus.Complect: 
-                    return DeliveryStatus.Shipment;
-                case DeliveryStatus.Shipment: 
-                    return DeliveryStatus.Delivery;
-                default:
-                    return null;
+                case DeliveryStatus.Started:
+                    return "Открыт";
+                case DeliveryStatus.Complect:
+                    return "Укомлектована";
+                case DeliveryStatus.Shipment:
+                    return "Отправлена";
+                case DeliveryStatus.Delivery:
+                    return "Доставлена";
             }
+            return String.Empty;
+        }
+        private string ConvertContractToBriefString(ContractDto contractDto)
+        {
+            return String.Format("{0} {1}", contractDto.Number, contractDto.Participant);
         }
 
         private string ConvertContractDtoToString(ContractDto contractDto) {
-            return String.Format("Number: {0}\nStart Date: {1}\nMonth repetition: {2}\nClose Date: {3}",
+            return String.Format("Номер: {0}\nДата начала действия: {1:D}\nПериодичность: {2}\nДата окончания действия: {3:D}",
                contractDto.Number, contractDto.Period.StartDate, contractDto.Period.MonthRepetition, contractDto.Period.CloseDate);
         }
     }

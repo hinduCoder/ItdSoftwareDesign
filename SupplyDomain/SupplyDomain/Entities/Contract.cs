@@ -7,12 +7,14 @@ namespace SupplyDomain.Entities
     {
         private Period _period;
         private readonly IList<OrderedItem> _orderedItems = new List<OrderedItem>();
-        private string _number;
-
-        public Contract(string number, Period period)
+        private readonly string _participant;
+        private readonly string _number;
+        private bool _isActive;
+        public Contract(string number, Period period, string participant)
         {
             _number = number;
             _period = period;
+            _participant = participant;
         }
 
         public void AddOrderedItem(OrderedItem orderedItem)
@@ -34,6 +36,17 @@ namespace SupplyDomain.Entities
         {
             get { return _period; }
             set { _period = value; }
+        }
+
+        public string Participant
+        {
+            get { return _participant; }
+        }
+
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set { _isActive = value; }
         }
     }
 }

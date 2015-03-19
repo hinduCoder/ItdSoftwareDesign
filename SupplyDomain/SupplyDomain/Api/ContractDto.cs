@@ -9,7 +9,7 @@ namespace SupplyDomain.Api
         public Guid Id { get; set; }
         public Period Period { get; set; }
         public string Number { get; set; }
-
+        public string Participant { get; set; }
         public override string ToString()
         {
             return String.Format("Number: {0}\nStart Date: {1}\nMonth repetition: {2}\nClose Date: {3}",
