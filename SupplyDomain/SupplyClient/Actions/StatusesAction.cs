@@ -28,7 +28,7 @@ namespace SupplyClient
         public void ChooseContract(ActionExecutionContext context)
         {
             var itemsSubMenu = new MenuBuilder().Repeatable().Title("Выберите контракт");
-            var contracts = _contractApi.GetAllContracts().Join(_deliveryApi.GetAllDeliveries(), c => c.Id, d => d.ContractId, (c, d) => c).ToList();
+            var contracts = _contractApi.GetActiveContracts();
             foreach (var contractDto in contracts)
             {
                 var contractDtoCaptured = contractDto;
@@ -40,17 +40,14 @@ namespace SupplyClient
 
         public void ChangeStatus(ActionExecutionContext context, ContractDto contractDto)
         {
-            //todo получать одну дилеивери
             context.Out.WriteLine(ConvertContractDtoToString(contractDto));
-            var deliveryDto = _deliveryApi
-                .GetAllDeliveries()
-                .Single(d => d.ContractId == contractDto.Id);
+            var deliveryDto = _deliveryApi.GetDeliveryWithContract(contractDto.Id);
             context.Out.WriteLine("Cтатус: {0}", ConvertStatusToString(deliveryDto.Status));
 
             new MenuBuilder().RunnableOnce()
-                .Item("Укомплектовать", ctx => _deliveryApi.SetComplectStatus(deliveryDto.Id))
-                .Item("Отправить", ctx => _deliveryApi.SetShipmentStatus(deliveryDto.Id))
-                .Item("Отгрузить", ctx => _deliveryApi.SetDeliveryDate(deliveryDto.Id))
+                .Item("Укомплектовать", ctx => _deliveryApi.Complect(deliveryDto.Id))
+                .Item("Отправить", ctx => _deliveryApi.Ship(deliveryDto.Id))
+                .Item("Отгрузить", ctx => _deliveryApi.Deliver(deliveryDto.Id))
                 .Exit("Отмена").GetMenu().Run();
 
         }

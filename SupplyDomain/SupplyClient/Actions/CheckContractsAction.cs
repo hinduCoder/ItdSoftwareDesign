@@ -21,10 +21,8 @@ namespace SupplyClient
         public void Perform(ActionExecutionContext context)
         {
             DateTime date = context.InputDateTime("Введите дату проверки");
-            //todo фильтровать в апи
             //todo все в апи
-            //todo получать только "потенциально верные" контракты а обработку делать потом
-            var contracts = _contractApi.GetAllContracts().Where(c => c.Period.IsDueDate(date));
+            var contracts = _contractApi.GetContractsByDueDate(date);
             foreach (var contractDto in contracts)
             {
                 _deliveryApi.AddNewDelivery(contractDto.Id);

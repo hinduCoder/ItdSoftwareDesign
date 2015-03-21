@@ -48,19 +48,19 @@ namespace SupplyDomain.Entities
             get { return _deliveryDate; }
         }
 
-        public void SetComplextStatus()
+        public void Complect()
         {
             _complectDate = DateTime.Now;
             _status = DeliveryStatus.Complect;
         }
 
-        public void SetShipmentStatus()
+        public void Ship()
         {
             _shipmentDate = DateTime.Now;
             _status = DeliveryStatus.Shipment;
         }
 
-        public void SetDeliveryDate()
+        public void Deliver()
         {
             _deliveryDate = DateTime.Now;
             _status = DeliveryStatus.Delivery;

@@ -20,7 +20,7 @@ namespace SupplyClient
 
             var itemApi = new ItemApi(itemsRepository);
             var deliveryApi = new DeliveryApi(deliveryRepository, contractsRepository);
-            var contractApi = new ContractApi(contractsRepository, orderedItemsRepository, itemsRepository);
+            var contractApi = new ContractApi(contractsRepository, orderedItemsRepository, itemsRepository, deliveryRepository);
 
             var contractAction = new ContractActions(contractApi, itemApi);
             var checkAction = new CheckContractsAction(contractApi, deliveryApi);
@@ -33,11 +33,7 @@ namespace SupplyClient
                     .Item("Введите данные для нового контракта", contractAction)
                     .Exit("Назад")
                     .End()
-                .Submenu("Состояния")
-                //todo убрать пункт
-                    .Item("Изменить", statusesAction)
-                    .Exit("Назад")
-                    .End()
+                .Item("Изменить состояния", statusesAction)
                 .Submenu("Тест") //TODO мы забыли
                     .Item("Проверить контракты", checkAction)
                     .Exit("Назад")

@@ -33,24 +33,36 @@ namespace SupplyDomain.Api
                 .ToList();
         }
 
+        public DeliveryDto GetDeliveryWithContract(Guid contractId)
+        {
+            return _deliveryRepository.AsQueryable().Select(d => new DeliveryDto {
+                Id = d.Id,
+                ComplextDate = d.ComplextDate,
+                ContractId = d.Contract.Id,
+                DeliveryDate = d.DeliveryDate,
+                ShipmetDate = d.ShipmentDate,
+                StartDate = d.StartDate,
+                Status = d.Status
+            }).Single(d => d.ContractId == contractId);
+        }
         public void AddNewDelivery(Guid contractId)
         {
             _deliveryRepository.Add(new Delivery(_contractRepository.Get(contractId)));
         }
 
-        public void SetComplectStatus(Guid deliveryId)
+        public void Complect(Guid deliveryId)
         {
-            GetDelivery(deliveryId).SetComplextStatus();
+            GetDelivery(deliveryId).Complect();
         }
 
-        public void SetShipmentStatus(Guid deliveryId)
+        public void Ship(Guid deliveryId)
         {
-            GetDelivery(deliveryId).SetShipmentStatus();
+            GetDelivery(deliveryId).Ship();
         }
 
-        public void SetDeliveryDate(Guid deliveryId)
+        public void Deliver(Guid deliveryId)
         {
-            GetDelivery(deliveryId).SetDeliveryDate();
+            GetDelivery(deliveryId).Deliver();
         }
 
         private Delivery GetDelivery(Guid deliveryId)
