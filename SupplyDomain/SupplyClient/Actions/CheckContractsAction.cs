@@ -21,6 +21,9 @@ namespace SupplyClient
         public void Perform(ActionExecutionContext context)
         {
             DateTime date = context.InputDateTime("Введите дату проверки");
+            //todo фильтровать в апи
+            //todo все в апи
+            //todo получать только "потенциально верные" контракты а обработку делать потом
             var contracts = _contractApi.GetAllContracts().Where(c => c.Period.IsDueDate(date));
             foreach (var contractDto in contracts)
             {
@@ -31,7 +34,7 @@ namespace SupplyClient
 
         private string ConvertContractDtoToString(ContractDto contractDto)
         {
-            return String.Format("Number: {0}\nStart Date: {1}\nMonth repetition: {2}\nClose Date: {3}",
+            return String.Format("Номер: {0}\nДата начала действия: {1:D}\nПериодичность: {2}\nДата окончания действия: {3:D}",
                contractDto.Number, contractDto.Period.StartDate, contractDto.Period.MonthRepetition, contractDto.Period.CloseDate);
         }
     }

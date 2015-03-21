@@ -9,6 +9,7 @@ namespace SupplyDomain
     {
         private readonly IRepository<Item> _itemsRepository;
         private readonly IRepository<Contract> _contractRepository; 
+
         public DemoDataGenerator(IRepository<Item> itemsRepository, IRepository<Contract> contractRepository)
         {
             _itemsRepository = itemsRepository;
@@ -17,7 +18,6 @@ namespace SupplyDomain
 
         public void Generate()
         {
-
             GenerateItems();
             GenerateContracts();
         }

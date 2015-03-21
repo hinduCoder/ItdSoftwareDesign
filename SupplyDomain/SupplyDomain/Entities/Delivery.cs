@@ -15,7 +15,6 @@ namespace SupplyDomain.Entities
         public Delivery(Contract contract)
         {
             _contract = contract;
-            _contract.IsActive = true;
             _startDate = DateTime.Now;
         }
 

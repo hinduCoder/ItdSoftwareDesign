@@ -9,7 +9,7 @@ namespace SupplyDomain.Entities
         private readonly IList<OrderedItem> _orderedItems = new List<OrderedItem>();
         private readonly string _participant;
         private readonly string _number;
-        private bool _isActive;
+
         public Contract(string number, Period period, string participant)
         {
             _number = number;
@@ -41,12 +41,6 @@ namespace SupplyDomain.Entities
         public string Participant
         {
             get { return _participant; }
-        }
-
-        public bool IsActive
-        {
-            get { return _isActive; }
-            set { _isActive = value; }
         }
     }
 }

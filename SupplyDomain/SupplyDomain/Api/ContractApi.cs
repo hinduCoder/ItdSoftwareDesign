@@ -27,13 +27,14 @@ namespace SupplyDomain.Api
         public void AddNewContract(ContractInput contractInput)
         {
             var contract = new Contract(contractInput.Number, contractInput.Period, contractInput.Participant);
+            _contractsRepository.Add(contract);
+
             foreach (var orderedItemDto in contractInput.OrderedItems)
             {
                 var item = _itemsRepository.Get(orderedItemDto.ItemId);
                 var orderedItem = new OrderedItem(contract, orderedItemDto.Quantity, item);
                 _orderedItemsRepository.Add(orderedItem);
             }
-            _contractsRepository.Add(contract);
         }
     }
 }

@@ -6,8 +6,8 @@ using SupplyDomain.Entities;
 
 namespace SupplyClient 
 {
-    class Program 
-    {
+   class Program 
+   {
         static void Main(string[] args)
         {
             var deliveryRepository = new MemoryRepository<Delivery>();
@@ -25,7 +25,7 @@ namespace SupplyClient
             var contractAction = new ContractActions(contractApi, itemApi);
             var checkAction = new CheckContractsAction(contractApi, deliveryApi);
             var statusesAction = new StatusesAction(contractApi, deliveryApi);
-
+            //todo архивный список контрактов и деливери
             new MenuBuilder()
                 .Title("Снабжение")
                 .Repeatable()
@@ -34,6 +34,7 @@ namespace SupplyClient
                     .Exit("Назад")
                     .End()
                 .Submenu("Состояния")
+                //todo убрать пункт
                     .Item("Изменить", statusesAction)
                     .Exit("Назад")
                     .End()

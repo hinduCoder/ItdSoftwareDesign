@@ -28,7 +28,5 @@ namespace SupplyClient
             context.Out.Write("{0}: ", promt);
             return context.In.ReadDateTime();
         }
-
-
     }
 }
