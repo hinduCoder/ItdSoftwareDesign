@@ -34,10 +34,7 @@ namespace SupplyClient
                     .Exit("Назад")
                     .End()
                 .Item("Изменить состояния", statusesAction)
-                .Submenu("Тест") //TODO мы забыли
-                    .Item("Проверить контракты", checkAction)
-                    .Exit("Назад")
-                    .End()
+                .Item("Tecт", checkAction) //TODO мы забыли
                 .Exit("Закрыть").GetMenu().Run();
         }
     }
