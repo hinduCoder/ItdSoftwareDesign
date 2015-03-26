@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionExecutionContextExtension.cs" />
+    <Compile Include="Actions\ArchiveContractsAction.cs" />
     <Compile Include="Actions\ContractActions.cs" />
     <Compile Include="Actions\StatusesAction.cs" />
     <Compile Include="Actions\CheckContractsAction.cs" />

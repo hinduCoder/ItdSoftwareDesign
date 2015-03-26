@@ -1,4 +1,5 @@
 ﻿using Feonufry.CUI.Menu.Builders;
+using SupplyClient.Actions;
 using SupplyDomain;
 using SupplyDomain.Api;
 using SupplyDomain.DataAccess;
@@ -25,7 +26,8 @@ namespace SupplyClient
             var contractAction = new ContractActions(contractApi, itemApi);
             var checkAction = new CheckContractsAction(contractApi, deliveryApi);
             var statusesAction = new StatusesAction(contractApi, deliveryApi);
-            //todo архивный список контрактов и деливери
+            var archiveContractsAction = new ArchiveContractsAction(contractApi);
+
             new MenuBuilder()
                 .Title("Снабжение")
                 .Repeatable()
@@ -34,7 +36,8 @@ namespace SupplyClient
                     .Exit("Назад")
                     .End()
                 .Item("Изменить состояния", statusesAction)
-                .Item("Tecт", checkAction) //TODO мы забыли
+                .Item("Текущие контракты", checkAction)
+                .Item("Архивные контракты", archiveContractsAction)
                 .Exit("Закрыть").GetMenu().Run();
         }
     }

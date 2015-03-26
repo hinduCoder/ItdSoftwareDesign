@@ -60,5 +60,23 @@ namespace SupplyDomain.Api
                 .Select(c => new ContractDto { Number = c.Number, Period = c.Period, Id = c.Id, Participant = c.Participant })
                 .ToList();
         }
+
+        public List<ContractDto> GetArchiveContracts(DateTime date)
+        {
+            return _contractsRepository.AsQueryable()
+                .Where(c => c.Period.CloseDate < date)
+                .Select(c => new ContractDto { Number = c.Number, Period = c.Period, Id = c.Id, Participant = c.Participant })
+                .ToList();
+        }
+
+        public List<ContractDto> ActivateContractsByDueDate(DateTime date)
+        {
+            var contracts = GetContractsByDueDate(date);
+            foreach (var contract in contracts)
+            {
+                _deliveriesRepository.Add(new Delivery(_contractsRepository.Get(contract.Id))); 
+            }
+            return contracts;
+        } 
     }
 }

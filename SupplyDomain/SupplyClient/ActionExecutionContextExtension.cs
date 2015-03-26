@@ -1,6 +1,7 @@
 ﻿using System;
 using Feonufry.CUI;
 using Feonufry.CUI.Actions;
+using SupplyDomain.Api;
 
 namespace SupplyClient
 {
@@ -27,6 +28,12 @@ namespace SupplyClient
         {
             context.Out.Write("{0}: ", promt);
             return context.In.ReadDateTime();
+        }
+
+        public static string ConvertToString(this ContractDto contractDto)
+        {
+            return String.Format("\nНомер: {0}\nДата начала действия: {1:D}\nПериодичность: {2}\nДата окончания действия: {3:D}",
+               contractDto.Number, contractDto.Period.StartDate, contractDto.Period.MonthRepetition, contractDto.Period.CloseDate);
         }
     }
 }

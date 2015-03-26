@@ -40,7 +40,7 @@ namespace SupplyClient
 
         public void ChangeStatus(ActionExecutionContext context, ContractDto contractDto)
         {
-            context.Out.WriteLine(ConvertContractDtoToString(contractDto));
+            context.Out.WriteLine(contractDto.ConvertToString());
             var deliveryDto = _deliveryApi.GetDeliveryWithContract(contractDto.Id);
             context.Out.WriteLine("Cтатус: {0}", ConvertStatusToString(deliveryDto.Status));
 
@@ -70,11 +70,6 @@ namespace SupplyClient
         private string ConvertContractToBriefString(ContractDto contractDto)
         {
             return String.Format("{0} {1}", contractDto.Number, contractDto.Participant);
-        }
-        
-        private string ConvertContractDtoToString(ContractDto contractDto) {
-            return String.Format("Номер: {0}\nДата начала действия: {1:D}\nПериодичность: {2}\nДата окончания действия: {3:D}",
-               contractDto.Number, contractDto.Period.StartDate, contractDto.Period.MonthRepetition, contractDto.Period.CloseDate);
         }
     }
 }
