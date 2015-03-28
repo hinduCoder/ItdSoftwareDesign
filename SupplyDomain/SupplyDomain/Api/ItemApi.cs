@@ -14,7 +14,7 @@ namespace SupplyDomain.Api
             _itemsRepository = itemsRepository;
         }
 
-        public List<ItemDto> GetAllItems()
+        public virtual List<ItemDto> GetAllItems()
         {
             return _itemsRepository.AsQueryable()
                 .Select(i => new ItemDto

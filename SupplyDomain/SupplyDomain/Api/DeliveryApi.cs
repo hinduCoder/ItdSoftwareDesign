@@ -17,7 +17,7 @@ namespace SupplyDomain.Api
             _contractRepository = contractRepository;
         }
 
-        public List<DeliveryDto> GetAllDeliveries()
+        public virtual List<DeliveryDto> GetAllDeliveries()
         {
             return _deliveryRepository.AsQueryable()
                 .Select(d => new DeliveryDto
@@ -33,7 +33,7 @@ namespace SupplyDomain.Api
                 .ToList();
         }
 
-        public DeliveryDto GetDeliveryWithContract(Guid contractId)
+        public virtual DeliveryDto GetDeliveryWithContract(Guid contractId)
         {
             return _deliveryRepository.AsQueryable().Select(d => new DeliveryDto {
                 Id = d.Id,
@@ -45,22 +45,22 @@ namespace SupplyDomain.Api
                 Status = d.Status
             }).Single(d => d.ContractId == contractId);
         }
-        public void AddNewDelivery(Guid contractId)
+        public virtual void AddNewDelivery(Guid contractId)
         {
             _deliveryRepository.Add(new Delivery(_contractRepository.Get(contractId)));
         }
 
-        public void Complect(Guid deliveryId)
+        public virtual void Complect(Guid deliveryId)
         {
             GetDelivery(deliveryId).Complect();
         }
 
-        public void Ship(Guid deliveryId)
+        public virtual void Ship(Guid deliveryId)
         {
             GetDelivery(deliveryId).Ship();
         }
 
-        public void Deliver(Guid deliveryId)
+        public virtual void Deliver(Guid deliveryId)
         {
             GetDelivery(deliveryId).Deliver();
         }
