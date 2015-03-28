@@ -7,7 +7,7 @@ using SupplyDomain.Entities;
 
 namespace SupplyClient 
 {
-   class Program 
+   class Program
    {
         static void Main(string[] args)
         {

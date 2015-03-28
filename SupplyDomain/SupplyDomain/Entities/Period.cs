@@ -33,7 +33,7 @@ namespace SupplyDomain.Entities
 
         public bool IsDueDate(DateTime date)
         {
-            return date.ПроверитьЕслиПериодичностьСоответствуетРазницеМеждуДатами(_startDate, MonthRepetition) && date < _closeDate;
+            return date.CheckDateIntoPeriod< _closeDate;
         }
     }
 }

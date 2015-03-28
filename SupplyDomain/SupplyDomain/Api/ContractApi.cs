@@ -8,7 +8,7 @@ namespace SupplyDomain.Api
 {
     public class ContractApi
     {
-        private readonly IRepository<Contract> _contractsRepository;
+        private readonly IRepository<Contract > _contractsRepository;
         private readonly IRepository<OrderedItem> _orderedItemsRepository;
         private readonly IRepository<Item> _itemsRepository;
         private readonly IRepository<Delivery> _deliveriesRepository; 
@@ -71,6 +71,7 @@ namespace SupplyDomain.Api
 
         public List<ContractDto> ActivateContractsByDueDate(DateTime date)
         {
+            //todo брать contract вместо dto
             var contracts = GetContractsByDueDate(date);
             foreach (var contract in contracts)
             {

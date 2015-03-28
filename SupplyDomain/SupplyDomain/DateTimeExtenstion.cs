@@ -15,7 +15,7 @@ namespace SupplyDomain
                 + (thisDateTime.Year - otherDateTime.Year)*12);
         }
 
-        public static bool ПроверитьЕслиПериодичностьСоответствуетРазницеМеждуДатами(this DateTime thisDateTime, DateTime otherDateTime, int monthRepetition)
+        public static bool CheckDateIntoPeriod(this DateTime thisDateTime, DateTime otherDateTime, int monthRepetition)
         {
             if (thisDateTime < otherDateTime)
             {
