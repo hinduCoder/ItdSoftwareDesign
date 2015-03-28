@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="Feonufry.CUI">
       <HintPath>..\packages\Feonufry.CUI.1.0.0\lib\Feonufry.CUI.dll</HintPath>
     </Reference>
@@ -50,8 +56,11 @@
     <Compile Include="Actions\ContractActions.cs" />
     <Compile Include="Actions\StatusesAction.cs" />
     <Compile Include="Actions\CheckContractsAction.cs" />
+    <Compile Include="CoreInstaller.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIInstaller.cs" />
+    <Compile Include="WindsorActionFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

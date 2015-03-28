@@ -1,4 +1,7 @@
-﻿using Feonufry.CUI.Menu.Builders;
+﻿using System.Runtime.InteropServices.ComTypes;
+using Castle.Windsor;
+using Feonufry.CUI.Menu.Builders;
+using Feonufry.CUI.Menu.Engine;
 using SupplyClient.Actions;
 using SupplyDomain;
 using SupplyDomain.Api;
@@ -11,33 +14,23 @@ namespace SupplyClient
    {
         static void Main(string[] args)
         {
-            var deliveryRepository = new MemoryRepository<Delivery>();
-            var contractsRepository = new MemoryRepository<Contract>();
-            var itemsRepository = new MemoryRepository<Item>();
-            var orderedItemsRepository = new MemoryRepository<OrderedItem>();
+            var container = new WindsorContainer();
+            container.Install(new CoreInstaller());
+            container.Install(new UIInstaller());
 
-            var demoData = new DemoDataGenerator(itemsRepository, contractsRepository);
+            var demoData = container.Resolve<DemoDataGenerator>();
             demoData.Generate();
 
-            var itemApi = new ItemApi(itemsRepository);
-            var deliveryApi = new DeliveryApi(deliveryRepository, contractsRepository);
-            var contractApi = new ContractApi(contractsRepository, orderedItemsRepository, itemsRepository, deliveryRepository);
-
-            var contractAction = new ContractActions(contractApi, itemApi);
-            var checkAction = new CheckContractsAction(contractApi, deliveryApi);
-            var statusesAction = new StatusesAction(contractApi, deliveryApi);
-            var archiveContractsAction = new ArchiveContractsAction(contractApi);
-
-            new MenuBuilder()
+            new MenuBuilder().WithActionFactory(new WindsorActionFactory(container)) 
                 .Title("Снабжение")
                 .Repeatable()
                 .Submenu("Добавление контракта")
-                    .Item("Введите данные для нового контракта", contractAction)
+                    .Item<ContractActions>("Введите данные для нового контракта")
                     .Exit("Назад")
                     .End()
-                .Item("Изменить состояния", statusesAction)
-                .Item("Текущие контракты", checkAction)
-                .Item("Архивные контракты", archiveContractsAction)
+                .Item<StatusesAction>("Изменить состояния")
+                .Item<CheckContractsAction>("Текущие контракты")
+                .Item<ArchiveContractsAction>("Архивные контракты")
                 .Exit("Закрыть").GetMenu().Run();
         }
     }
