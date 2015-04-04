@@ -35,7 +35,6 @@ namespace SupplyDomain.Entities
         public Period Period
         {
             get { return _period; }
-            set { _period = value; }
         }
 
         public string Participant

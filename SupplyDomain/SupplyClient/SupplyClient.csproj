@@ -56,8 +56,6 @@
     <Compile Include="Actions\ContractActions.cs" />
     <Compile Include="Actions\StatusesAction.cs" />
     <Compile Include="Actions\CheckContractsAction.cs" />
-    <Compile Include="CoreInstaller.cs" />
-    <Compile Include="LoggerInterceptor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIInstaller.cs" />

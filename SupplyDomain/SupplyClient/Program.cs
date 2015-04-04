@@ -15,13 +15,12 @@ namespace SupplyClient
         static void Main(string[] args)
         {
             var container = new WindsorContainer();
-            container.Install(new CoreInstaller());
-            container.Install(new UIInstaller());
+            container.Install(new CoreInstaller(), new UIInstaller());
 
             var demoData = container.Resolve<DemoDataGenerator>();
             demoData.Generate();
 
-            new MenuBuilder().WithActionFactory(new WindsorActionFactory(container)) 
+            new MenuBuilder().WithActionFactory(new WindsorActionFactory(container))
                 .Title("Снабжение")
                 .Repeatable()
                 .Submenu("Добавление контракта")

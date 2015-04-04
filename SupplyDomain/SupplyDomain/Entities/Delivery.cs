@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography;
 
 namespace SupplyDomain.Entities
 {
@@ -7,7 +6,7 @@ namespace SupplyDomain.Entities
     {
         private Contract _contract;
         private DeliveryStatus _status = DeliveryStatus.Started;
-        private DateTime _startDate; 
+        private DateTime _startDate;
         private DateTime? _complectDate;
         private DateTime? _shipmentDate;
         private DateTime? _deliveryDate;
@@ -33,7 +32,7 @@ namespace SupplyDomain.Entities
             get { return _status; }
         }
 
-        public DateTime? ComplextDate
+        public DateTime? CompleсtDate
         {
             get { return _complectDate; }
         }

@@ -8,8 +8,8 @@ namespace SupplyDomain.Api
 {
     public class DeliveryApi
     {
-        private IRepository<Delivery> _deliveryRepository;
-        private IRepository<Contract> _contractRepository;
+        private readonly IRepository<Delivery> _deliveryRepository;
+        private readonly IRepository<Contract> _contractRepository;
 
         public DeliveryApi(IRepository<Delivery> deliveryRepository, IRepository<Contract> contractRepository)
         {
@@ -23,7 +23,7 @@ namespace SupplyDomain.Api
                 .Select(d => new DeliveryDto
                 {
                     Id = d.Id,
-                    ComplextDate = d.ComplextDate,
+                    CompleсtDate = d.CompleсtDate,
                     ContractId = d.Contract.Id,
                     DeliveryDate = d.DeliveryDate,
                     ShipmetDate = d.ShipmentDate,
@@ -32,22 +32,28 @@ namespace SupplyDomain.Api
                 })
                 .ToList();
         }
-
-        public virtual DeliveryDto GetDeliveryWithContract(Guid contractId)
+        //TODO возвращать список delivery. 
+        //TODO В меню -> статусы -> по одному контракту -> по несколько delivery -> выбираем из списка
+        public virtual DeliveryDto GetContractDeliveries(Guid contractId)
         {
-            return _deliveryRepository.AsQueryable().Select(d => new DeliveryDto {
-                Id = d.Id,
-                ComplextDate = d.ComplextDate,
-                ContractId = d.Contract.Id,
-                DeliveryDate = d.DeliveryDate,
-                ShipmetDate = d.ShipmentDate,
-                StartDate = d.StartDate,
-                Status = d.Status
-            }).Single(d => d.ContractId == contractId);
+            return _deliveryRepository.AsQueryable()
+                .Select(d => new DeliveryDto
+                {
+                    Id = d.Id,
+                    CompleсtDate = d.CompleсtDate,
+                    ContractId = d.Contract.Id,
+                    DeliveryDate = d.DeliveryDate,
+                    ShipmetDate = d.ShipmentDate,
+                    StartDate = d.StartDate,
+                    Status = d.Status
+                })
+                .Single(d => d.ContractId == contractId);
         }
+
         public virtual void AddNewDelivery(Guid contractId)
         {
-            _deliveryRepository.Add(new Delivery(_contractRepository.Get(contractId)));
+            var contract = _contractRepository.Get(contractId);
+            _deliveryRepository.Add(new Delivery(contract));
         }
 
         public virtual void Complect(Guid deliveryId)

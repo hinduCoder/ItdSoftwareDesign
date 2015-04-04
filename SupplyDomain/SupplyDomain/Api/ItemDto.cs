@@ -1,5 +1,4 @@
 ﻿using System;
-using SupplyDomain.Entities;
 
 namespace SupplyDomain.Api
 {
@@ -9,10 +8,5 @@ namespace SupplyDomain.Api
         public string Name { get; set; }
         public string Description { get; set; }
         public string Article { get; set; }
-
-        internal Item ToItem()
-        {
-            return new Item(Name, Description, Article);
-        }
     }
 }

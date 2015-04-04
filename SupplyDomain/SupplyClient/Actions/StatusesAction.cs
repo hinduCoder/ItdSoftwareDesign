@@ -24,7 +24,7 @@ namespace SupplyClient
         {
             ChooseContract(context);
         }
-
+        //todo:получать delivery
         public void ChooseContract(ActionExecutionContext context)
         {
             var itemsSubMenu = new MenuBuilder().Repeatable().Title("Выберите контракт");
@@ -37,11 +37,11 @@ namespace SupplyClient
             itemsSubMenu.Exit("Назад")
                 .GetMenu().Run();
         }
-
+        //TODO: выводить только изменения статусов которые можно сделать
         public void ChangeStatus(ActionExecutionContext context, ContractDto contractDto)
         {
             context.Out.WriteLine(contractDto.ConvertToString());
-            var deliveryDto = _deliveryApi.GetDeliveryWithContract(contractDto.Id);
+            var deliveryDto = _deliveryApi.GetContractDeliveries(contractDto.Id);
             context.Out.WriteLine("Cтатус: {0}", ConvertStatusToString(deliveryDto.Status));
 
             new MenuBuilder().RunnableOnce()

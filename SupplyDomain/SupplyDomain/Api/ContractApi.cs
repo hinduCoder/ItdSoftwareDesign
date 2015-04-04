@@ -24,7 +24,8 @@ namespace SupplyDomain.Api
         public virtual List<ContractDto> GetAllContracts()
         {
             return _contractsRepository.AsQueryable()
-                .Select(c => new ContractDto{ Number = c.Number, Period = c.Period, Id = c.Id, Participant = c.Participant}).ToList();
+                .Select(c => new ContractDto{ Number = c.Number, Period = c.Period, Id = c.Id, Participant = c.Participant})
+                .ToList();
         }
 
         public virtual void AddNewContract(ContractInput contractInput)
@@ -35,15 +36,14 @@ namespace SupplyDomain.Api
             foreach (var orderedItemDto in contractInput.OrderedItems)
             {
                 var item = _itemsRepository.Get(orderedItemDto.ItemId);
-                var orderedItem = new OrderedItem(contract, orderedItemDto.Quantity, item);
+                var orderedItem = new OrderedItem(orderedItemDto.Quantity, item);
                 _orderedItemsRepository.Add(orderedItem);
             }
         }
 
-       
-
         public virtual List<ContractDto> GetActiveContracts()
         {
+            // TODO: обойтись без join
             return _contractsRepository.AsQueryable()
                 .Join(_deliveriesRepository.AsQueryable(), c => c.Id, d => d.Contract.Id, (c, d) => c)
                 .Select(c => new ContractDto { Number = c.Number, Period = c.Period, Id = c.Id, Participant = c.Participant })
@@ -60,23 +60,24 @@ namespace SupplyDomain.Api
 
         public virtual List<ContractDto> ActivateContractsByDueDate(DateTime date)
         {
-            //todo брать contract вместо dto
             var contracts = GetContractsByDueDate(date);
             foreach (var contract in contracts)
             {
-                _deliveriesRepository.Add(new Delivery(_contractsRepository.Get(contract.Id))); 
+                _deliveriesRepository.Add(new Delivery(contract)); 
             }
-            return contracts;
+
+            return contracts
+                .Select(
+                    c => new ContractDto {Number = c.Number, Period = c.Period, Id = c.Id, Participant = c.Participant})
+                .ToList();
+
         }
 
-        private List<ContractDto> GetContractsByDueDate(DateTime dueDate) {
-            var contracts = _contractsRepository
+        private List<Contract> GetContractsByDueDate(DateTime dueDate) {
+            return _contractsRepository
                 .AsQueryable()
                 .Where(contract => dueDate >= contract.Period.StartDate && dueDate < contract.Period.CloseDate)
-                .Select(
-                    c => new ContractDto { Number = c.Number, Period = c.Period, Id = c.Id, Participant = c.Participant })
-                .ToList();
-            return contracts
+                .ToList()
                 .Where(contract => contract.Period.IsDueDate(dueDate))
                 .ToList();
         }

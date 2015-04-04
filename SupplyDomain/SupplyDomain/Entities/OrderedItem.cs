@@ -2,7 +2,6 @@
 {
     public class OrderedItem : Entity
     {
-        private Contract _contract;
         private int _quantity;
         private Item _item;
 
@@ -16,11 +15,10 @@
             get { return _item; }
         }
 
-        public OrderedItem(Contract contract, int quantity, Item item)
+        public OrderedItem(int quantity, Item item)
         {
             _quantity = quantity;
             _item = item;
-            _contract = contract;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace SupplyClient
 
         public WindsorActionFactory(WindsorContainer container)
         {
-            this._container = container;
+            _container = container;
         }
 
         public IAction Create(Type type)

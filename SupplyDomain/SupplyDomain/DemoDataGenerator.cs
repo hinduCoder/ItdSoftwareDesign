@@ -30,15 +30,15 @@ namespace SupplyDomain
 
             contract = new Contract("123456789asdf", 
                 new Period(DateTime.Parse("10.03.2014"), 1, DateTime.Parse("10.03.2016")), "Макфа");
-            orderedItem = new OrderedItem(contract, 2, items[0]);
+            orderedItem = new OrderedItem(2, items[0]);
             contract.AddOrderedItem(orderedItem);
             _contractRepository.Add(contract);
 
             contract = new Contract("fdsa987654321",
                 new Period(DateTime.Parse("25.06.2012"), 2, DateTime.Parse("25.06.2017")), "Такиесптичкино");
-            orderedItem = new OrderedItem(contract, 1, items[0]);
+            orderedItem = new OrderedItem(1, items[0]);
             contract.AddOrderedItem(orderedItem);
-            orderedItem = new OrderedItem(contract, 1, items[1]);
+            orderedItem = new OrderedItem(1, items[1]);
             contract.AddOrderedItem(orderedItem);
             _contractRepository.Add(contract);
         }

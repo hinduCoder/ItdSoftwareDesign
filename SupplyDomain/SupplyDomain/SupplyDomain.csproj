@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="Feonufry.CUI">
       <HintPath>..\packages\Feonufry.CUI.1.0.0\lib\Feonufry.CUI.dll</HintPath>
     </Reference>
@@ -53,6 +59,7 @@
     <Compile Include="Api\ItemDto.cs" />
     <Compile Include="Api\OrderedItemDto.cs" />
     <Compile Include="Api\OrderedItemInput.cs" />
+    <Compile Include="CoreInstaller.cs" />
     <Compile Include="DateTimeExtenstion.cs" />
     <Compile Include="DemoDataGenerator.cs" />
     <Compile Include="Entities\Contract.cs" />
@@ -64,6 +71,7 @@
     <Compile Include="DataAccess\MemoryRepository.cs" />
     <Compile Include="Entities\OrderedItem.cs" />
     <Compile Include="Entities\Period.cs" />
+    <Compile Include="LoggerInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
