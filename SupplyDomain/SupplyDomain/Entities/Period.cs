@@ -32,7 +32,13 @@ namespace SupplyDomain.Entities
 
         public bool IsDueDate(DateTime date)
         {
-            return date.CheckDateIntoPeriod(_closeDate, _monthRepetition);
+            if (date >= _closeDate)
+                return false;
+            if(date.Day == _startDate.Day ||
+                date.Day > DateTime.DaysInMonth(_startDate.Year, _startDate.Month)) {
+                return date.GetMonthCountOfBetween(_startDate) % _monthRepetition == 0;
+            }
+            return false;
         }
     }
 }
