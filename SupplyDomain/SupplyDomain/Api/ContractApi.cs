@@ -24,7 +24,7 @@ namespace SupplyDomain.Api
         public virtual List<ContractDto> GetAllContracts()
         {
             return _contractsRepository.AsQueryable()
-                .Select(c => new ContractDto{ Number = c.Number, Period = c.Period, Id = c.Id, Participant = c.Participant})
+                .Select(ContractDto.GetExpression())
                 .ToList();
         }
 
@@ -46,7 +46,7 @@ namespace SupplyDomain.Api
             // TODO: обойтись без join
             return _contractsRepository.AsQueryable()
                 .Join(_deliveriesRepository.AsQueryable(), c => c.Id, d => d.Contract.Id, (c, d) => c)
-                .Select(c => new ContractDto { Number = c.Number, Period = c.Period, Id = c.Id, Participant = c.Participant })
+                .Select(ContractDto.GetExpression())
                 .ToList();
         }
 
@@ -54,7 +54,7 @@ namespace SupplyDomain.Api
         {
             return _contractsRepository.AsQueryable()
                 .Where(c => c.Period.CloseDate < date)
-                .Select(c => new ContractDto { Number = c.Number, Period = c.Period, Id = c.Id, Participant = c.Participant })
+                .Select(ContractDto.GetExpression())
                 .ToList();
         }
 

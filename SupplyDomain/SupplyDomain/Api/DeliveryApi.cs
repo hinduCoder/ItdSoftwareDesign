@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using SupplyDomain.DataAccess;
 using SupplyDomain.Entities;
 
@@ -20,33 +21,18 @@ namespace SupplyDomain.Api
         public virtual List<DeliveryDto> GetAllDeliveries()
         {
             return _deliveryRepository.AsQueryable()
-                .Select(d => new DeliveryDto
-                {
-                    Id = d.Id,
-                    CompleсtDate = d.CompleсtDate,
-                    ContractId = d.Contract.Id,
-                    DeliveryDate = d.DeliveryDate,
-                    ShipmetDate = d.ShipmentDate,
-                    StartDate = d.StartDate,
-                    Status = d.Status
-                })
+                .Select(DeliveryDto.GetExpression())
                 .ToList();
         }
+
+     
+
         //TODO возвращать список delivery. 
         //TODO В меню -> статусы -> по одному контракту -> по несколько delivery -> выбираем из списка
         public virtual DeliveryDto GetContractDeliveries(Guid contractId)
         {
             return _deliveryRepository.AsQueryable()
-                .Select(d => new DeliveryDto
-                {
-                    Id = d.Id,
-                    CompleсtDate = d.CompleсtDate,
-                    ContractId = d.Contract.Id,
-                    DeliveryDate = d.DeliveryDate,
-                    ShipmetDate = d.ShipmentDate,
-                    StartDate = d.StartDate,
-                    Status = d.Status
-                })
+                .Select(DeliveryDto.GetExpression())
                 .Single(d => d.ContractId == contractId);
         }
 

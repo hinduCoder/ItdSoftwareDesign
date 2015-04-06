@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using SupplyDomain.Entities;
 
 namespace SupplyDomain.Api
@@ -12,5 +13,17 @@ namespace SupplyDomain.Api
         public DateTime? CompleсtDate { get; set; }
         public DateTime? ShipmetDate { get; set; }
         public DateTime? DeliveryDate { get; set; }
+
+        public static Expression<Func<Delivery, DeliveryDto>> GetExpression() {
+            return d => new DeliveryDto {
+                Id = d.Id,
+                CompleсtDate = d.CompleсtDate,
+                ContractId = d.Contract.Id,
+                DeliveryDate = d.DeliveryDate,
+                ShipmetDate = d.ShipmentDate,
+                StartDate = d.StartDate,
+                Status = d.Status
+            };
+        }
     }
 }
