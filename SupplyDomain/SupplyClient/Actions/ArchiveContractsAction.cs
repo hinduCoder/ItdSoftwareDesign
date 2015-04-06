@@ -1,5 +1,4 @@
-﻿using System;
-using Feonufry.CUI.Actions;
+﻿using Feonufry.CUI.Actions;
 using SupplyDomain.Api;
 
 namespace SupplyClient.Actions

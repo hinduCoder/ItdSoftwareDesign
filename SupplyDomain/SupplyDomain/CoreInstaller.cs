@@ -3,7 +3,6 @@ using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using SupplyDomain;
 using SupplyDomain.DataAccess;
-using Component = Castle.MicroKernel.Registration.Component;
 
 namespace SupplyClient
 {
