@@ -19,34 +19,35 @@ namespace SupplyClient
 
         public void Perform(ActionExecutionContext context)
         {
-            ChooseContract(context);
+            ChooseDelivery(context);
         }
-        //todo:получать delivery
-        public void ChooseContract(ActionExecutionContext context)
+        //TODO: DONE получать delivery вместо контрактов
+        //TODO: DONE выводить только изменения статусов которые можно сделать
+        public void ChooseDelivery(ActionExecutionContext context)
         {
-            var itemsSubMenu = new MenuBuilder().Repeatable().Title("Выберите контракт");
-            var contracts = _contractApi.GetActiveContracts();
-            foreach (var contractDto in contracts)
+            var itemsSubMenu = new MenuBuilder().Repeatable().Title("Выберите доставку по выбранному контракту");
+            var deliveryDtos = _deliveryApi.GetNotClosedDeliveries();
+            foreach (var deliveryDto in deliveryDtos)
             {
-                var contractDtoCaptured = contractDto;
-                itemsSubMenu.Item().Title(ConvertContractToBriefString(contractDto)).Action(ctx => ChangeStatus(ctx, contractDtoCaptured));
+                var deliveryDtoCaptured = deliveryDto;
+                itemsSubMenu.Item(ConvertDeliveryToString(deliveryDto), ctx => ChangeStatus(ctx, deliveryDtoCaptured));
             }
             itemsSubMenu.Exit("Назад")
                 .GetMenu().Run();
         }
-        //TODO: выводить только изменения статусов которые можно сделать
-        public void ChangeStatus(ActionExecutionContext context, ContractDto contractDto)
+
+        public void ChangeStatus(ActionExecutionContext context, DeliveryDto deliveryDto)
         {
-            context.Out.WriteLine(contractDto.ConvertToString());
-            var deliveryDto = _deliveryApi.GetContractDeliveries(contractDto.Id);
             context.Out.WriteLine("Cтатус: {0}", ConvertStatusToString(deliveryDto.Status));
 
             new MenuBuilder().RunnableOnce()
-                .Item("Укомплектовать", ctx => _deliveryApi.Complect(deliveryDto.Id))
-                .Item("Отправить", ctx => _deliveryApi.Ship(deliveryDto.Id))
-                .Item("Отгрузить", ctx => _deliveryApi.Deliver(deliveryDto.Id))
+                .Item().Title("Укомплектовать").Action(ctx => _deliveryApi.Complect(deliveryDto.Id))
+                    .AvailableWhen(() => deliveryDto.CanComplect).End()
+                .Item().Title("Отправить").Action(ctx => _deliveryApi.Ship(deliveryDto.Id))
+                    .AvailableWhen(() => deliveryDto.CanShip).End()
+                .Item().Title("Отгрузить").Action(ctx => _deliveryApi.Deliver(deliveryDto.Id))
+                    .AvailableWhen(() => deliveryDto.CanDeliver).End()
                 .Exit("Отмена").GetMenu().Run();
-
         }
 
         private string ConvertStatusToString(DeliveryStatus status)
@@ -64,6 +65,12 @@ namespace SupplyClient
             }
             return String.Empty;
         }
+
+        private string ConvertDeliveryToString(DeliveryDto deliveryDto)
+        {
+            return String.Format("Контракт {0}. Дата поставки {1:D}", deliveryDto.ContractNumber, deliveryDto.StartDate);
+        }
+
         private string ConvertContractToBriefString(ContractDto contractDto)
         {
             return String.Format("{0} {1}", contractDto.Number, contractDto.Participant);

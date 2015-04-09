@@ -41,15 +41,7 @@ namespace SupplyDomain.Api
             }
         }
 
-        public virtual List<ContractDto> GetActiveContracts()
-        {
-            // TODO: обойтись без join
-            return _contractsRepository.AsQueryable()
-                .Join(_deliveriesRepository.AsQueryable(), c => c.Id, d => d.Contract.Id, (c, d) => c)
-                .Select(ContractDto.GetExpression())
-                .ToList();
-        }
-
+        // TODO:DONE обойтись без join
         public virtual List<ContractDto> GetArchiveContracts(DateTime date)
         {
             return _contractsRepository.AsQueryable()
@@ -63,7 +55,7 @@ namespace SupplyDomain.Api
             var contracts = GetContractsByDueDate(date);
             foreach (var contract in contracts)
             {
-                _deliveriesRepository.Add(new Delivery(contract)); 
+                _deliveriesRepository.Add(new Delivery(contract, date)); 
             }
 
             return contracts

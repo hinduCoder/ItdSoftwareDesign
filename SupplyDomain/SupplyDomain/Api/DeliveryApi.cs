@@ -17,28 +17,22 @@ namespace SupplyDomain.Api
             _contractRepository = contractRepository;
         }
 
-        public virtual List<DeliveryDto> GetAllDeliveries()
+        public virtual List<DeliveryDto> GetNotClosedDeliveries()
         {
             return _deliveryRepository.AsQueryable()
+                .Where(d => d.Status != DeliveryStatus.Delivery)
                 .Select(DeliveryDto.GetExpression())
                 .ToList();
-        }
+        }     
 
-     
-
-        //TODO возвращать список delivery. 
-        //TODO В меню -> статусы -> по одному контракту -> по несколько delivery -> выбираем из списка
-        public virtual DeliveryDto GetContractDeliveries(Guid contractId)
+        //TODO: DONE возвращать список delivery. 
+        //TODO: DONE В меню -> статусы -> по одному контракту -> по несколько delivery -> выбираем из списка
+        public virtual List<DeliveryDto> GetContractDeliveries(Guid contractId)
         {
             return _deliveryRepository.AsQueryable()
                 .Select(DeliveryDto.GetExpression())
-                .Single(d => d.ContractId == contractId);
-        }
-
-        public virtual void AddNewDelivery(Guid contractId)
-        {
-            var contract = _contractRepository.Get(contractId);
-            _deliveryRepository.Add(new Delivery(contract));
+                .Where(d => d.ContractId == contractId)
+                .ToList();
         }
 
         public virtual void Complect(Guid deliveryId)

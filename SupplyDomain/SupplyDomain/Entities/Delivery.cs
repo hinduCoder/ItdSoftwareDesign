@@ -11,10 +11,16 @@ namespace SupplyDomain.Entities
         private DateTime? _shipmentDate;
         private DateTime? _deliveryDate;
 
-        public Delivery(Contract contract)
+        public bool CanComplect { get; private set; }
+        public bool CanShip { get; private set; }
+        public bool CanDeliver { get; private set; }
+
+
+        public Delivery(Contract contract, DateTime date)
         {
             _contract = contract;
-            _startDate = DateTime.Now;
+            _startDate = date;
+            CanComplect = true;
         }
 
         public DateTime StartDate
@@ -51,18 +57,23 @@ namespace SupplyDomain.Entities
         {
             _complectDate = DateTime.Now;
             _status = DeliveryStatus.Complect;
+            CanComplect = false;
+            CanShip = true;
         }
 
         public void Ship()
         {
             _shipmentDate = DateTime.Now;
             _status = DeliveryStatus.Shipment;
+            CanShip = false;
+            CanDeliver = true;
         }
 
         public void Deliver()
         {
             _deliveryDate = DateTime.Now;
             _status = DeliveryStatus.Delivery;
-        }       
+            CanDeliver = false;
+        }
     }
 }
